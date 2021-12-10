@@ -36,7 +36,7 @@ namespace pokemon_showdown_p2p
 
         public DatiCondivisi()
         {
-            udpClient = new UdpClient(50000); //porta non registrata
+            udpClient = new UdpClient(50001); //porta non registrata
             RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             connesso = false;
 
