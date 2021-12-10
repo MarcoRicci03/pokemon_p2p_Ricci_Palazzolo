@@ -81,6 +81,7 @@ namespace pokemon_showdown_p2p
 
                 //invio conferma connessione
                 send_data = Encoding.ASCII.GetBytes("c;" + ip_peer + ";" + port_peer.ToString() + ";" + nome_peer + ";" + codUtente); //c;indirizzo;porta;nome;codiceUtente
+                Console.WriteLine("Ricevuto");
             }
             else
             {
