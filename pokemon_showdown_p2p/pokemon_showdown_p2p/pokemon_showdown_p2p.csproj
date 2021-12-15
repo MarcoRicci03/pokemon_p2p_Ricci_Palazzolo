@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CPokemon.cs" />
     <Compile Include="DatiCondivisi.cs" />
     <Compile Include="ThreadInvia.cs" />
     <Compile Include="ThreadRicevi.cs" />
