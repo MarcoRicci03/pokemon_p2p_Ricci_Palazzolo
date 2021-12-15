@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,6 +58,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Gioco.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,14 +70,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CPokemon.cs" />
     <Compile Include="DatiCondivisi.cs" />
-    <Compile Include="ThreadInvia.cs" />
-    <Compile Include="ThreadRicevi.cs" />
+    <Compile Include="Gioco.xaml.cs">
+      <DependentUpon>Gioco.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="selectPokemon.xaml.cs">
+      <DependentUpon>selectPokemon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="selectPokemon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -90,6 +104,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -97,6 +112,160 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Properties\hires\001.png" />
+    <Resource Include="Properties\hires\002.png" />
+    <Resource Include="Properties\hires\003.png" />
+    <Resource Include="Properties\hires\004.png" />
+    <Resource Include="Properties\hires\005.png" />
+    <Resource Include="Properties\hires\006.png" />
+    <Resource Include="Properties\hires\007.png" />
+    <Resource Include="Properties\hires\008.png" />
+    <Resource Include="Properties\hires\009.png" />
+    <Resource Include="Properties\hires\010.png" />
+    <Resource Include="Properties\hires\011.png" />
+    <Resource Include="Properties\hires\012.png" />
+    <Resource Include="Properties\hires\013.png" />
+    <Resource Include="Properties\hires\014.png" />
+    <Resource Include="Properties\hires\015.png" />
+    <Resource Include="Properties\hires\016.png" />
+    <Resource Include="Properties\hires\017.png" />
+    <Resource Include="Properties\hires\018.png" />
+    <Resource Include="Properties\hires\019.png" />
+    <Resource Include="Properties\hires\020.png" />
+    <Resource Include="Properties\hires\021.png" />
+    <Resource Include="Properties\hires\022.png" />
+    <Resource Include="Properties\hires\023.png" />
+    <Resource Include="Properties\hires\024.png" />
+    <Resource Include="Properties\hires\025.png" />
+    <Resource Include="Properties\hires\026.png" />
+    <Resource Include="Properties\hires\027.png" />
+    <Resource Include="Properties\hires\028.png" />
+    <Resource Include="Properties\hires\029.png" />
+    <Resource Include="Properties\hires\030.png" />
+    <Resource Include="Properties\hires\031.png" />
+    <Resource Include="Properties\hires\032.png" />
+    <Resource Include="Properties\hires\033.png" />
+    <Resource Include="Properties\hires\034.png" />
+    <Resource Include="Properties\hires\035.png" />
+    <Resource Include="Properties\hires\036.png" />
+    <Resource Include="Properties\hires\037.png" />
+    <Resource Include="Properties\hires\038.png" />
+    <Resource Include="Properties\hires\039.png" />
+    <Resource Include="Properties\hires\040.png" />
+    <Resource Include="Properties\hires\041.png" />
+    <Resource Include="Properties\hires\042.png" />
+    <Resource Include="Properties\hires\043.png" />
+    <Resource Include="Properties\hires\044.png" />
+    <Resource Include="Properties\hires\045.png" />
+    <Resource Include="Properties\hires\046.png" />
+    <Resource Include="Properties\hires\047.png" />
+    <Resource Include="Properties\hires\048.png" />
+    <Resource Include="Properties\hires\049.png" />
+    <Resource Include="Properties\hires\050.png" />
+    <Resource Include="Properties\hires\051.png" />
+    <Resource Include="Properties\hires\052.png" />
+    <Resource Include="Properties\hires\053.png" />
+    <Resource Include="Properties\hires\054.png" />
+    <Resource Include="Properties\hires\055.png" />
+    <Resource Include="Properties\hires\056.png" />
+    <Resource Include="Properties\hires\057.png" />
+    <Resource Include="Properties\hires\058.png" />
+    <Resource Include="Properties\hires\059.png" />
+    <Resource Include="Properties\hires\060.png" />
+    <Resource Include="Properties\hires\061.png" />
+    <Resource Include="Properties\hires\062.png" />
+    <Resource Include="Properties\hires\063.png" />
+    <Resource Include="Properties\hires\064.png" />
+    <Resource Include="Properties\hires\065.png" />
+    <Resource Include="Properties\hires\066.png" />
+    <Resource Include="Properties\hires\067.png" />
+    <Resource Include="Properties\hires\068.png" />
+    <Resource Include="Properties\hires\069.png" />
+    <Resource Include="Properties\hires\070.png" />
+    <Resource Include="Properties\hires\071.png" />
+    <Resource Include="Properties\hires\072.png" />
+    <Resource Include="Properties\hires\073.png" />
+    <Resource Include="Properties\hires\074.png" />
+    <Resource Include="Properties\hires\075.png" />
+    <Resource Include="Properties\hires\076.png" />
+    <Resource Include="Properties\hires\077.png" />
+    <Resource Include="Properties\hires\078.png" />
+    <Resource Include="Properties\hires\079.png" />
+    <Resource Include="Properties\hires\080.png" />
+    <Resource Include="Properties\hires\081.png" />
+    <Resource Include="Properties\hires\082.png" />
+    <Resource Include="Properties\hires\083.png" />
+    <Resource Include="Properties\hires\084.png" />
+    <Resource Include="Properties\hires\085.png" />
+    <Resource Include="Properties\hires\086.png" />
+    <Resource Include="Properties\hires\087.png" />
+    <Resource Include="Properties\hires\088.png" />
+    <Resource Include="Properties\hires\089.png" />
+    <Resource Include="Properties\hires\090.png" />
+    <Resource Include="Properties\hires\091.png" />
+    <Resource Include="Properties\hires\092.png" />
+    <Resource Include="Properties\hires\093.png" />
+    <Resource Include="Properties\hires\094.png" />
+    <Resource Include="Properties\hires\095.png" />
+    <Resource Include="Properties\hires\096.png" />
+    <Resource Include="Properties\hires\097.png" />
+    <Resource Include="Properties\hires\098.png" />
+    <Resource Include="Properties\hires\099.png" />
+    <Resource Include="Properties\hires\100.png" />
+    <Resource Include="Properties\hires\101.png" />
+    <Resource Include="Properties\hires\102.png" />
+    <Resource Include="Properties\hires\103.png" />
+    <Resource Include="Properties\hires\104.png" />
+    <Resource Include="Properties\hires\105.png" />
+    <Resource Include="Properties\hires\106.png" />
+    <Resource Include="Properties\hires\107.png" />
+    <Resource Include="Properties\hires\108.png" />
+    <Resource Include="Properties\hires\109.png" />
+    <Resource Include="Properties\hires\110.png" />
+    <Resource Include="Properties\hires\111.png" />
+    <Resource Include="Properties\hires\112.png" />
+    <Resource Include="Properties\hires\113.png" />
+    <Resource Include="Properties\hires\114.png" />
+    <Resource Include="Properties\hires\115.png" />
+    <Resource Include="Properties\hires\116.png" />
+    <Resource Include="Properties\hires\117.png" />
+    <Resource Include="Properties\hires\118.png" />
+    <Resource Include="Properties\hires\119.png" />
+    <Resource Include="Properties\hires\120.png" />
+    <Resource Include="Properties\hires\121.png" />
+    <Resource Include="Properties\hires\122.png" />
+    <Resource Include="Properties\hires\123.png" />
+    <Resource Include="Properties\hires\124.png" />
+    <Resource Include="Properties\hires\125.png" />
+    <Resource Include="Properties\hires\126.png" />
+    <Resource Include="Properties\hires\127.png" />
+    <Resource Include="Properties\hires\128.png" />
+    <Resource Include="Properties\hires\129.png" />
+    <Resource Include="Properties\hires\130.png" />
+    <Resource Include="Properties\hires\131.png" />
+    <Resource Include="Properties\hires\132.png" />
+    <Resource Include="Properties\hires\133.png" />
+    <Resource Include="Properties\hires\134.png" />
+    <Resource Include="Properties\hires\135.png" />
+    <Resource Include="Properties\hires\136.png" />
+    <Resource Include="Properties\hires\137.png" />
+    <Resource Include="Properties\hires\138.png" />
+    <Resource Include="Properties\hires\139.png" />
+    <Resource Include="Properties\hires\140.png" />
+    <Resource Include="Properties\hires\141.png" />
+    <Resource Include="Properties\hires\142.png" />
+    <Resource Include="Properties\hires\143.png" />
+    <Resource Include="Properties\hires\144.png" />
+    <Resource Include="Properties\hires\145.png" />
+    <Resource Include="Properties\hires\146.png" />
+    <Resource Include="Properties\hires\147.png" />
+    <Resource Include="Properties\hires\148.png" />
+    <Resource Include="Properties\hires\149.png" />
+    <Resource Include="Properties\hires\150.png" />
+    <Resource Include="Properties\hires\151.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,24 @@
+﻿<Window x:Class="pokemon_showdown_p2p.selectPokemon"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pokemon_showdown_p2p"
+        mc:Ignorable="d"
+        Title="selectPokemon" Height="450" Width="800">
+    <Grid x:Name="panel">
+        <Image x:Name="img" HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <ListBox x:Name="listBoxListaPokemon" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="352" Margin="115,10,0,0" VerticalAlignment="Top" Width="220" SelectionChanged="listBoxLista_SelectionChanged"/>
+        <Button x:Name="btnAggiungi" Content="Aggiungi" HorizontalAlignment="Left" Margin="115,367,0,0" VerticalAlignment="Top" Width="75" Click="btnAggiungi_Click"/>
+        <Button x:Name="btnConferma" Content="Conferma" HorizontalAlignment="Left" Margin="707,389,0,0" VerticalAlignment="Top" Width="75" Click="btnConferma_Click"/>
+        <Label x:Name="lblMAX" Content="" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="442"/>
+        <Image x:Name="imgPokemon1" HorizontalAlignment="Left" Height="100" Margin="340,41,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image x:Name="imgPokemon2" HorizontalAlignment="Left" Height="100" Margin="445,41,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image x:Name="imgPokemon3" HorizontalAlignment="Left" Height="100" Margin="550,41,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image x:Name="imgPokemon4" HorizontalAlignment="Left" Height="100" Margin="340,146,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image x:Name="imgPokemon5" HorizontalAlignment="Left" Height="100" Margin="445,146,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image x:Name="imgPokemon6" HorizontalAlignment="Left" Height="100" Margin="550,146,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="btnRimuovi" Content="Rimuovi" HorizontalAlignment="Left" Margin="195,367,0,0" VerticalAlignment="Top" Width="75" Click="btnRimuovi_Click"/>
+
+    </Grid>
+</Window>

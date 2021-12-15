@@ -21,13 +21,24 @@ namespace pokemon_showdown_p2p
     /// </summary>
     public partial class MainWindow : Window
     {
-        DatiCondivisi dati;
-        bool isRicevendo;
+        public static DatiCondivisi dati;
+        bool isRicevendo, avanti = false;
+        Window Gioco;
         public MainWindow()
         {
             InitializeComponent();
             dati = new DatiCondivisi();
             isRicevendo = false;
+            /*Thread TCheckAvanti = new Thread(checkAvanti);
+            TCheckAvanti.Start();
+            TCheckAvanti.IsBackground = true;*/
+            if(avanti == false)
+            {
+                Gioco = new Gioco(dati);
+                dati.loadDataFromJSON();
+                Gioco.ShowDialog();
+                this.Close();
+            }
         }
         private void btnMandaConnessione_Click(object sender, RoutedEventArgs e)
         {
@@ -58,6 +69,15 @@ namespace pokemon_showdown_p2p
             {
                 Console.WriteLine("Il peer è già in ascolto");
             }
+        }
+
+        public void checkAvanti()
+        {
+            //do
+            //{
+
+            //} while (!dati.connesso);
+            avanti = true;
         }
     }
 }

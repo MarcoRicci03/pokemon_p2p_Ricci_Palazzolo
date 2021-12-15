@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -6,41 +9,29 @@ using System.Threading;
 
 namespace pokemon_showdown_p2p
 {
-    class DatiCondivisi
+    public class DatiCondivisi
     {
         public UdpClient udpClient;
         public IPEndPoint RemoteIpEndPoint;
-
         //informazioni di questo peer
         public String ip_peer { get; set; }
-
         public int port_peer { get; set; }
-
         public String nome_peer { get; set; }
-
         public String codUtente { get; set; }
-
         //info peer connesso
         public String ip_peer_connesso { get; set; }
-
         public int port_peer_connesso { get; set; }
-
         public String nome_peer_connesso { get; set; }
-
         public String codUtente_connesso { get; set; }
-
         public bool connesso;
-
         public DatiCondivisi()
         {
-            udpClient = new UdpClient(50001); //porta non registrata
+            udpClient = new UdpClient(50002); //porta non registrata
             RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             connesso = false;
 
             Thread ThreadRiceviConnessione = new Thread(riceviConnessione);
         }
-
-
 
         public String ricevi()
         {
@@ -93,7 +84,7 @@ namespace pokemon_showdown_p2p
 
         public void inviaConnessione()
         {
-            Byte[] receive_data = new byte[1500]; 
+            Byte[] receive_data = new byte[1500];
             String to_split;
             String[] splitted;
 
@@ -108,17 +99,71 @@ namespace pokemon_showdown_p2p
                 to_split = Encoding.ASCII.GetString(receive_data); //c;indirizzo;porta;nome;codiceUtente
                 splitted = to_split.Split(';');
                 if (to_split[1].Equals("e"))
-                    Console.WriteLine("Errore di connessione");
-
+                    Console.WriteLine("Errore");
+                    
             }
         }
 
-        public void provaCaricaDati()
+        public List<CMoves> listMosse { get; set; }
+        public List<CPokemon> listPokemon { get; set; }
+        public List<CPokemon> listPokemonSelezionati { get; set; }
+        public void loadDataFromJSON()
         {
-            
-        }
+            StreamReader r = new StreamReader("moves.json");
+            string jsonString = r.ReadToEnd();
+            listMosse = JsonConvert.DeserializeObject<List<CMoves>>(jsonString);
 
+            r = new StreamReader("pokemon.json");
+            jsonString = r.ReadToEnd();
+            listPokemon = JsonConvert.DeserializeObject<List<CPokemon>>(jsonString);
+
+            listPokemonSelezionati = new List<CPokemon>();
+        }
+    }
+
+    public class CPokemon
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string type1 { get; set; }
+        public string type2 { get; set; }
+        public int HP { get; set; }
+        public string description { get; set; }
+        public string sprite { get; set; }
+        public string hires { get; set; }
+
+        public override string ToString()
+        {
+            return name + " " + HP + "hp";
+        }
+    }
+    public class CMoves
+    {
+        public string accuracy { get; set; }
+        public string ename { get; set; }
+        public int id { get; set; }
+        public int power { get; set; }
+        public string type { get; set; }
 
     }
 
+    public class CTypes
+    {
+        public string english { get; set; }
+        public string ineffective0 { get; set; }
+        public string ineffective1 { get; set; }
+        public string ineffective2 { get; set; }
+        public string ineffective3 { get; set; }
+        public string ineffective4 { get; set; }
+        public string ineffective5 { get; set; }
+        public string ineffective6 { get; set; }
+        public string no_effect0 { get; set; }
+        public string effective0 { get; set; }
+        public string effective1 { get; set; }
+        public string effective2 { get; set; }
+        public string effective3 { get; set; }
+        public string effective4 { get; set; }
+
+
+    }
 }
