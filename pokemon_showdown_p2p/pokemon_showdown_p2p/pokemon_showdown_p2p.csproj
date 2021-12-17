@@ -71,6 +71,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DatiCondivisi.cs" />
+    <Compile Include="DatiCondivisiGioco.cs" />
     <Compile Include="Gioco.xaml.cs">
       <DependentUpon>Gioco.xaml</DependentUpon>
     </Compile>

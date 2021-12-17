@@ -21,17 +21,24 @@ namespace pokemon_showdown_p2p
     {
         public static Window selectPokemon;
         DatiCondivisi dati;
-        public Gioco(DatiCondivisi dati)
+        DatiCondivisiGioco datiGioco;
+        public Gioco(DatiCondivisi dati, DatiCondivisiGioco datiGioco)
         {
             InitializeComponent();
             this.dati = dati;
+            this.datiGioco = datiGioco;
         }
 
         private void btnSelectPokemon_Click(object sender, RoutedEventArgs e)
         {
-            selectPokemon = new selectPokemon(dati, this);
+            selectPokemon = new selectPokemon(dati, datiGioco, this);
             selectPokemon.Show();
             this.Hide();
+        }
+
+        private void btnLotta_Click(object sender, RoutedEventArgs e)
+        {
+            datiGioco.assegnaMosse();
         }
     }
 }
