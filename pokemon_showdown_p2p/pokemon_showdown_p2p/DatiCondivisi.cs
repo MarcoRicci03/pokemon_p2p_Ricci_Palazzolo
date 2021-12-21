@@ -24,6 +24,8 @@ namespace pokemon_showdown_p2p
         public String nome_peer_connesso { get; set; }
         public String codUtente_connesso { get; set; }
         public bool connesso;
+        //info ricezione
+        public string[] risAscolto { get; set; }
         public DatiCondivisi()
         {
             udpClient = new UdpClient(50002); //porta non registrata
@@ -35,19 +37,21 @@ namespace pokemon_showdown_p2p
 
         public void ricevi()
         {
-            Byte[] receive_data = new byte[1500];
+            Byte[] receive_data;
             String to_split;
-            //ricevere il pacchetto, ricomporlo e metterlo in una stringa
-            if (connesso) //controllo per sicurezza che sia connesso con qualcuno
+            string[] v;
+            do
             {
+                receive_data = new byte[1500];
+                //ricevere il pacchetto, ricomporlo e metterlo in una stringa
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
                 to_split = Encoding.ASCII.GetString(receive_data);
-            }
-            else
-            {
-                to_split = "Peer non connesso";
-            }
-            
+                 v = to_split.Split(';');
+                if (Int32.Parse(v[0]) == port_peer_connesso)
+                {
+                    risAscolto = v;
+                }
+            } while (true); //da cambiare la condizione
         }
 
         public void riceviConnessione()
@@ -100,13 +104,13 @@ namespace pokemon_showdown_p2p
                 splitted = to_split.Split(';');
                 if (to_split[1].Equals("e"))
                     Console.WriteLine("Errore");
-                    
+
             }
         }
 
-        public void manda(int id)
+        public void manda(string s)
         {
-            Byte[] send_data = Encoding.ASCII.GetBytes("m;" + port_peer.ToString()+ ";"+ id); //m;porta;id
+            Byte[] send_data = Encoding.ASCII.GetBytes(port_peer_connesso + ";" + s);
             udpClient.Connect(ip_peer_connesso, port_peer_connesso);
             udpClient.Send(send_data, send_data.Length);
         }
