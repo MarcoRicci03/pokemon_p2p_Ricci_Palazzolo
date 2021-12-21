@@ -10,10 +10,12 @@ namespace pokemon_showdown_p2p
 {
     public class DatiCondivisiGioco
     {
-        public List<CMoves> listMosse { get; set; }
-        public List<CPokemon> listPokemon { get; set; }
-        public List<CPokemon> listPokemonSelezionati { get; set; }
-        public List<CPokemonLotta> listPokemonSelezionatiConMosse { get; set; }
+        public List<CMoves> listMosse { get; set; } //lista delle mosse
+        public List<CPokemon> listPokemon { get; set; } //lista di tutti i pokemon basica
+        public List<CPokemon> listPokemonSelezionati { get; set; } //lista pokemon selezionati basica
+        public List<CPokemonConMosse> listPokemonSelezionatiConMosse { get; set; } //lista dei pokemon selezionati con mosse assegnate
+        public List<CPokemonPerLotta> listPokemonPerLotta { get; set; } //lista dei pokemon selezionati con vita, id e nome
+
 
         public DatiCondivisiGioco()
         {
@@ -21,6 +23,7 @@ namespace pokemon_showdown_p2p
         }
         public void loadDataFromJSON()
         {
+            //leggiamo dati da file JSON
             StreamReader r = new StreamReader("moves.json");
             string jsonString = r.ReadToEnd();
             listMosse = JsonConvert.DeserializeObject<List<CMoves>>(jsonString);
@@ -28,15 +31,16 @@ namespace pokemon_showdown_p2p
             r = new StreamReader("pokemon.json");
             jsonString = r.ReadToEnd();
             listPokemon = JsonConvert.DeserializeObject<List<CPokemon>>(jsonString);
-
+            //inizializzo liste
             listPokemonSelezionati = new List<CPokemon>();
+            listPokemonPerLotta = new List<CPokemonPerLotta>();
         }
 
         public void assegnaMosse()
         {
-            listPokemonSelezionatiConMosse = new List<CPokemonLotta>();
+            listPokemonSelezionatiConMosse = new List<CPokemonConMosse>();
             List<CMoves> listMosseTipo = new List<CMoves>();
-            CPokemonLotta pl;
+            CPokemonConMosse pl;
             Random r = new Random();
             List<CMoves> t;
 
@@ -46,7 +50,7 @@ namespace pokemon_showdown_p2p
                 t = new List<CMoves>();
                 for (int j = 0; j < listMosse.Count; j++)
                 {
-                    if(listPokemonSelezionati[i].type1 == listMosse[j].type || listPokemonSelezionati[i].type2 == listMosse[j].type)
+                    if (listPokemonSelezionati[i].type1 == listMosse[j].type || listPokemonSelezionati[i].type2 == listMosse[j].type)
                     {
                         listMosseTipo.Add(listMosse[j]);
                     }
@@ -54,21 +58,25 @@ namespace pokemon_showdown_p2p
                 for (int h = 0; h < 4; h++)
                 {
                     CMoves m = listMosseTipo[r.Next(0, listMosseTipo.Count)];
-                    if(!t.Contains(m))
+                    if (!t.Contains(m))
                     {
                         t.Add(m);
-                    } else
+                    }
+                    else
                     {
                         h--;
                     }
                 }
-                CPokemonLotta tempPokemon = new CPokemonLotta(listPokemonSelezionati[i], t[0], t[1], t[2], t[3]);
+                CPokemonConMosse tempPokemon = new CPokemonConMosse(listPokemonSelezionati[i], t[0], t[1], t[2], t[3]);
                 listPokemonSelezionatiConMosse.Add(tempPokemon);
             }
-            int a = 0;
+            CPokemonPerLotta ppl;
+            for (int i = 0; i < listPokemonSelezionati.Count; i++)
+            {
+                ppl = new CPokemonPerLotta(listPokemonSelezionati[i].name, listPokemonSelezionati[i].id, listPokemonSelezionati[i].HP);
+                listPokemonPerLotta.Add(ppl);
+            }
         }
-
-        
     }
     public class CPokemon
     {
@@ -100,7 +108,7 @@ namespace pokemon_showdown_p2p
         }
 
     }
-    public class CPokemonLotta
+    public class CPokemonConMosse
     {
         public CPokemon pokemonScelto { get; set; }
         public CMoves move1 { get; set; }
@@ -108,7 +116,7 @@ namespace pokemon_showdown_p2p
         public CMoves move3 { get; set; }
         public CMoves move4 { get; set; }
 
-        public CPokemonLotta(CPokemon pokemonScelto, CMoves move1, CMoves move2, CMoves move3, CMoves move4)
+        public CPokemonConMosse(CPokemon pokemonScelto, CMoves move1, CMoves move2, CMoves move3, CMoves move4)
         {
             this.pokemonScelto = pokemonScelto;
             this.move1 = move1;
@@ -117,4 +125,18 @@ namespace pokemon_showdown_p2p
             this.move4 = move4;
         }
     }
+    public class CPokemonPerLotta
+    {
+        public string nome { get; set; }
+        public int id { get; set; }
+        public int HP { get; set; }
+
+        public CPokemonPerLotta(string nome, int id, int HP)
+        {
+            this.nome = nome;
+            this.id = id;
+            this.HP = HP;
+        }
+    }
+
 }

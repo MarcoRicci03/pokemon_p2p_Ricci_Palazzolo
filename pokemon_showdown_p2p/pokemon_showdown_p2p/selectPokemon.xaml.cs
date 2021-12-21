@@ -139,8 +139,6 @@ namespace pokemon_showdown_p2p
                                 imgPokemon6.Source = bitmapimage;
                                 break;
                         }
-                        
-                        
                     }
                 }
             }

@@ -20,28 +20,35 @@ namespace pokemon_showdown_p2p
     public partial class Gioco : Window
     {
         public static Window selectPokemon;
-        DatiCondivisi dati;
+        DatiCondivisi datiConnessione;
         DatiCondivisiGioco datiGioco;
         public Gioco(DatiCondivisi dati, DatiCondivisiGioco datiGioco)
         {
             InitializeComponent();
-            this.dati = dati;
+            this.datiConnessione = dati;
             this.datiGioco = datiGioco;
         }
 
         private void btnSelectPokemon_Click(object sender, RoutedEventArgs e)
         {
-            selectPokemon = new selectPokemon(dati, datiGioco, this);
+            selectPokemon = new selectPokemon(datiConnessione, datiGioco, this);
             selectPokemon.Show();
             this.Hide();
         }
 
         private void btnLotta_Click(object sender, RoutedEventArgs e)
         {
-            datiGioco.assegnaMosse();
-            Lotta fLotta = new Lotta();
-            fLotta.Show();
-            this.Hide();
+            if (datiGioco.listPokemonSelezionati.Count == 6) //possiamo iniziare a giocare solo se abbiamo 6 pokemon selezionati
+            {
+                datiGioco.assegnaMosse();
+                Lotta fLotta = new Lotta(datiConnessione, datiGioco, this);
+                fLotta.Show();
+                this.Hide();
+            }
+            else
+            {
+                lblErrore.Content = "Selezionare 6 pokemon";
+            }
         }
     }
 }

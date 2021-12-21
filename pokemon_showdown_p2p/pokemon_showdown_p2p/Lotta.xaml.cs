@@ -19,9 +19,18 @@ namespace pokemon_showdown_p2p
     /// </summary>
     public partial class Lotta : Window
     {
-        public Lotta()
+        DatiCondivisi datiConnessione;
+        DatiCondivisiGioco datiGioco = new DatiCondivisiGioco();
+        Gioco WPFGioco;
+        public Lotta(DatiCondivisi datiConnessione, DatiCondivisiGioco datiGioco, Gioco WPFGioco)
         {
             InitializeComponent();
+            this.datiConnessione = datiConnessione;
+            this.datiGioco = datiGioco;
+            this.WPFGioco = WPFGioco; //finestra precedente
+            btnMossa1.Content = "ciao";
         }
+
+
     }
 }
