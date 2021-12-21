@@ -57,3 +57,5 @@ E:\ricc\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2
 E:\ricc\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\Gioco.baml
 E:\ricc\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\selectPokemon.baml
 E:\ricc\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\pokemon_showdown_p2p.csproj.CopyComplete
+E:\ricc\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\Lotta.g.cs
+E:\ricc\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\Lotta.baml

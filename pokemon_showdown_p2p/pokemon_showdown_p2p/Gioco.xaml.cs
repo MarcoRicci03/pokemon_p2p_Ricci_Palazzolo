@@ -39,6 +39,9 @@ namespace pokemon_showdown_p2p
         private void btnLotta_Click(object sender, RoutedEventArgs e)
         {
             datiGioco.assegnaMosse();
+            Lotta fLotta = new Lotta();
+            fLotta.Show();
+            this.Hide();
         }
     }
 }
