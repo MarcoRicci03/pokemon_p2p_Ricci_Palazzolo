@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="Lotta" Height="450" Width="800">
     <Grid>
-        <Button x:Name="btnMossa1" Content="" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="381" Height="84"/>
-        <Button x:Name="btnMossa2" Content="" HorizontalAlignment="Left" Margin="401,236,0,0" VerticalAlignment="Top" Width="381" Height="84"/>
-        <Button x:Name="btnMossa3" Content="" HorizontalAlignment="Left" Margin="10,325,0,0" VerticalAlignment="Top" Width="381" Height="84"/>
-        <Button x:Name="btnMossa4" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="381" Margin="401,325,0,0" Height="84"/>
-        <Image HorizontalAlignment="Left" Height="215" Margin="10,10,0,0" VerticalAlignment="Top" Width="381"/>
-        <Image HorizontalAlignment="Left" Height="215" Margin="401,10,0,0" VerticalAlignment="Top" Width="381" RenderTransformOrigin="0.5,0.5">
+        <Button x:Name="btnMossa1" Content="" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa1_Click"/>
+        <Button x:Name="btnMossa2" Content="" HorizontalAlignment="Left" Margin="401,236,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa2_Click"/>
+        <Button x:Name="btnMossa3" Content="" HorizontalAlignment="Left" Margin="10,325,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa3_Click"/>
+        <Button x:Name="btnMossa4" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="381" Margin="401,325,0,0" Height="84" Click="btnMossa4_Click"/>
+        <Image x:Name="imgPokemonN" HorizontalAlignment="Left" Height="215" Margin="10,10,0,0" VerticalAlignment="Top" Width="381"/>
+        <Image x:Name="imgPokemonA" HorizontalAlignment="Left" Height="215" Margin="401,10,0,0" VerticalAlignment="Top" Width="381" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

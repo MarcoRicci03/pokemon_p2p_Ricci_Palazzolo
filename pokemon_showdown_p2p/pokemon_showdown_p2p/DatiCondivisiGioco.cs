@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace pokemon_showdown_p2p
 {
@@ -76,6 +77,23 @@ namespace pokemon_showdown_p2p
                 ppl = new CPokemonPerLotta(listPokemonSelezionati[i].name, listPokemonSelezionati[i].id, listPokemonSelezionati[i].HP);
                 listPokemonPerLotta.Add(ppl);
             }
+        }
+
+        public void aggiornaLotta(Lotta wpfLotta)
+        {
+            //aggiorno pokemon nostri
+            wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[0].move1.ename;
+            wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[0].move2.ename;
+            wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[0].move3.ename;
+            wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[0].move4.ename;
+            BitmapImage bitimg = new BitmapImage();
+            bitimg.BeginInit();
+            bitimg.UriSource = new Uri(@"Properties/" + listPokemonSelezionati[0].hires, UriKind.RelativeOrAbsolute);
+            bitimg.EndInit();
+            wpfLotta.imgPokemonN.Source = bitimg;
+
+            //aggiorno pokemon avversari
+
         }
     }
     public class CPokemon

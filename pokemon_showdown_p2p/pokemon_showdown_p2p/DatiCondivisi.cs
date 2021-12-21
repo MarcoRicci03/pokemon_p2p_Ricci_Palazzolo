@@ -33,7 +33,7 @@ namespace pokemon_showdown_p2p
             Thread ThreadRiceviConnessione = new Thread(riceviConnessione);
         }
 
-        public String ricevi()
+        public void ricevi()
         {
             Byte[] receive_data = new byte[1500];
             String to_split;
@@ -47,7 +47,7 @@ namespace pokemon_showdown_p2p
             {
                 to_split = "Peer non connesso";
             }
-            return to_split;
+            
         }
 
         public void riceviConnessione()
@@ -102,6 +102,13 @@ namespace pokemon_showdown_p2p
                     Console.WriteLine("Errore");
                     
             }
+        }
+
+        public void manda(int id)
+        {
+            Byte[] send_data = Encoding.ASCII.GetBytes("m;" + port_peer.ToString()+ ";"+ id); //m;porta;id
+            udpClient.Connect(ip_peer_connesso, port_peer_connesso);
+            udpClient.Send(send_data, send_data.Length);
         }
     }
 }
