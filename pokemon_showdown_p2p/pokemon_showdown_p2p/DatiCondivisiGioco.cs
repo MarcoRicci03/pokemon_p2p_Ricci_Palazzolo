@@ -169,6 +169,15 @@ namespace pokemon_showdown_p2p
             wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
             wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
         }
+
+        private readonly object balanceLock = new object();
+        public void setTurno(bool b)
+        {
+            lock (balanceLock)
+            {
+                mioTurno = b;
+            }
+        }
     }
     public class CPokemon
     {

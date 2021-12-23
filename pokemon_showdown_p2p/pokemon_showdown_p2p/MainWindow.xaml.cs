@@ -32,8 +32,8 @@ namespace pokemon_showdown_p2p
         }
         private void btnMandaConnessione_Click(object sender, RoutedEventArgs e)
         {
-            dati.ip_peer_connesso = txtIpDest.Text;
-            dati.port_peer_connesso = Int32.Parse(txtPortDest.Text);
+            dati.peerConnesso.ip_peer_connesso = txtIpDest.Text;
+            dati.peerConnesso.port_peer_connesso = Int32.Parse(txtPortDest.Text);
             Thread inviaConnessione = new Thread(dati.inviaConnessione);
             // Name of the thread is Mythread
             inviaConnessione.Name = "Thread per ricezione";

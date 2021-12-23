@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -14,15 +11,10 @@ namespace pokemon_showdown_p2p
         public UdpClient udpClient;
         public IPEndPoint RemoteIpEndPoint;
         //informazioni di questo peer
-        public String ip_peer { get; set; }
-        public int port_peer { get; set; }
-        public String nome_peer { get; set; }
-        public String codUtente { get; set; }
+        public Peer_questo peerQuesto { get; set; }
         //info peer connesso
-        public String ip_peer_connesso { get; set; }
-        public int port_peer_connesso { get; set; }
-        public String nome_peer_connesso { get; set; }
-        public String codUtente_connesso { get; set; }
+        public Peer_connesso peerConnesso { get; set; }
+        
         public bool connesso;
         //info ricezione
         public string[] risAscolto { get; set; }
@@ -47,7 +39,7 @@ namespace pokemon_showdown_p2p
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
                 to_split = Encoding.ASCII.GetString(receive_data);
                  v = to_split.Split(';');
-                if (Int32.Parse(v[0]) == port_peer_connesso)
+                if (Int32.Parse(v[0]) == peerConnesso.port_peer_connesso)
                 {
                     risAscolto = v;
                 }
@@ -63,16 +55,15 @@ namespace pokemon_showdown_p2p
             if (!connesso)
             {
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
-                to_split = Encoding.ASCII.GetString(receive_data); //c;indirizzo;porta;nome;codiceUtente
+                to_split = Encoding.ASCII.GetString(receive_data); //c;indirizzo;porta;nome
                 splitted = to_split.Split(';');
-                ip_peer_connesso = splitted[1];
-                port_peer_connesso = Int32.Parse(splitted[2]);
-                nome_peer_connesso = splitted[3];
-                codUtente_connesso = splitted[4];
+                peerConnesso.ip_peer_connesso = splitted[1];
+                peerConnesso.port_peer_connesso = Int32.Parse(splitted[2]);
+                peerConnesso.nome_peer_connesso = splitted[3];
                 connesso = true;
 
                 //invio conferma connessione
-                send_data = Encoding.ASCII.GetBytes("c;" + ip_peer + ";" + port_peer.ToString() + ";" + nome_peer + ";" + codUtente); //c;indirizzo;porta;nome;codiceUtente
+                send_data = Encoding.ASCII.GetBytes("c;" + peerQuesto.ip_peer + ";" + peerQuesto.port_peer.ToString() + ";" + peerQuesto.nome_peer); //c;indirizzo;porta;nome
                 Console.WriteLine("Ricevuto");
             }
             else
@@ -81,7 +72,7 @@ namespace pokemon_showdown_p2p
                 Console.WriteLine("Non connesso");
             }
 
-            udpClient.Connect(ip_peer_connesso, port_peer_connesso);
+            udpClient.Connect(peerConnesso.ip_peer_connesso, peerConnesso.port_peer_connesso);
             udpClient.Send(send_data, send_data.Length);
 
         }
@@ -94,8 +85,8 @@ namespace pokemon_showdown_p2p
 
             if (!connesso)
             {
-                Byte[] send_data = Encoding.ASCII.GetBytes("c;" + ip_peer + ";" + port_peer.ToString() + ";" + nome_peer + ";" + codUtente); //c;indirizzo;porta;nome;codiceUtente
-                udpClient.Connect(ip_peer_connesso, port_peer_connesso);
+                Byte[] send_data = Encoding.ASCII.GetBytes("c;" + peerQuesto.ip_peer + ";" + peerQuesto.port_peer.ToString() + ";" + peerQuesto.nome_peer); //c;indirizzo;porta;nome
+                udpClient.Connect(peerConnesso.ip_peer_connesso, peerConnesso.port_peer_connesso);
                 udpClient.Send(send_data, send_data.Length);
 
                 //ascoltare la risposta
@@ -110,9 +101,24 @@ namespace pokemon_showdown_p2p
 
         public void manda(string s)
         {
-            Byte[] send_data = Encoding.ASCII.GetBytes(port_peer_connesso + ";" + s);
-            udpClient.Connect(ip_peer_connesso, port_peer_connesso);
+            Byte[] send_data = Encoding.ASCII.GetBytes(peerConnesso.port_peer_connesso + ";" + s);
+            udpClient.Connect(peerConnesso.ip_peer_connesso, peerConnesso.port_peer_connesso);
             udpClient.Send(send_data, send_data.Length);
         }
+    }
+
+    public class Peer_connesso
+    {
+        public String ip_peer_connesso { get; set; }
+        public int port_peer_connesso { get; set; }
+        public String nome_peer_connesso { get; set; }
+        public String codUtente_connesso { get; set; }
+    }
+
+    public class Peer_questo
+    {
+        public String ip_peer { get; set; }
+        public int port_peer { get; set; }
+        public String nome_peer { get; set; }
     }
 }
