@@ -41,24 +41,36 @@ namespace pokemon_showdown_p2p
         {
             datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move1.id);
             datiGioco.setTurno(false);
+            attesaTurno();
         }
 
         private void btnMossa3_Click(object sender, RoutedEventArgs e)
         {
             datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move3.id);
             datiGioco.setTurno(false);
+            attesaTurno();
         }
 
         private void btnMossa2_Click(object sender, RoutedEventArgs e)
         {
             datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move2.id);
             datiGioco.setTurno(false);
+            attesaTurno();
         }
 
         private void btnMossa4_Click(object sender, RoutedEventArgs e)
         {
             datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move4.id);
             datiGioco.setTurno(false);
+            attesaTurno();
+        }
+
+        public void attesaTurno()
+        {
+            do
+            {
+                //attendo il mio turno
+            } while (!datiGioco.mioTurno);
         }
     }
 }

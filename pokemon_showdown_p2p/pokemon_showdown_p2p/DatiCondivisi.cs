@@ -20,6 +20,9 @@ namespace pokemon_showdown_p2p
         public string[] risAscolto { get; set; }
         public DatiCondivisi()
         {
+            peerQuesto = new Peer_questo();
+            peerConnesso = new Peer_connesso();
+            risAscolto[1] = "nulla";
             udpClient = new UdpClient(50002); //porta non registrata
             RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             connesso = false;
@@ -38,7 +41,7 @@ namespace pokemon_showdown_p2p
                 //ricevere il pacchetto, ricomporlo e metterlo in una stringa
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
                 to_split = Encoding.ASCII.GetString(receive_data);
-                 v = to_split.Split(';');
+                v = to_split.Split(';');
                 if (Int32.Parse(v[0]) == peerConnesso.port_peer_connesso)
                 {
                     risAscolto = v;
@@ -52,6 +55,7 @@ namespace pokemon_showdown_p2p
             Byte[] send_data;
             String to_split;
             String[] splitted;
+            
             if (!connesso)
             {
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
@@ -81,7 +85,6 @@ namespace pokemon_showdown_p2p
         {
             Byte[] receive_data = new byte[1500];
             String to_split;
-            String[] splitted;
 
             if (!connesso)
             {
@@ -92,10 +95,7 @@ namespace pokemon_showdown_p2p
                 //ascoltare la risposta
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
                 to_split = Encoding.ASCII.GetString(receive_data); //c;indirizzo;porta;nome;codiceUtente
-                splitted = to_split.Split(';');
-                if (to_split[1].Equals("e"))
-                    Console.WriteLine("Errore");
-
+                risAscolto = to_split.Split(';');
             }
         }
 
@@ -112,7 +112,13 @@ namespace pokemon_showdown_p2p
         public String ip_peer_connesso { get; set; }
         public int port_peer_connesso { get; set; }
         public String nome_peer_connesso { get; set; }
-        public String codUtente_connesso { get; set; }
+
+        public Peer_connesso()
+        {
+            ip_peer_connesso = "";
+            port_peer_connesso = 0;
+            nome_peer_connesso = "";
+        }
     }
 
     public class Peer_questo
@@ -120,5 +126,12 @@ namespace pokemon_showdown_p2p
         public String ip_peer { get; set; }
         public int port_peer { get; set; }
         public String nome_peer { get; set; }
+
+        public Peer_questo()
+        {
+            ip_peer = "";
+            port_peer = 50002;
+            nome_peer = "";
+        }
     }
 }
