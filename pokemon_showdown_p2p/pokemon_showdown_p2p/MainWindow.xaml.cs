@@ -19,19 +19,14 @@ namespace pokemon_showdown_p2p
             dati = new DatiCondivisi();
             datiGioco = new DatiCondivisiGioco();
             isRicevendo = false;
-            Thread TCheckAvanti = new Thread(checkAvanti);
-            TCheckAvanti.Start();
         }
         private void btnMandaConnessione_Click(object sender, RoutedEventArgs e)
         {
             dati.peerConnesso.ip_peer_connesso = txtIpDest.Text;
             dati.peerConnesso.port_peer_connesso = Int32.Parse(txtPortDest.Text);
-            Thread inviaConnessione = new Thread(dati.inviaConnessione);
-            inviaConnessione.Start();
-            do
-            {
-                Console.WriteLine(dati.risAscolto[2]);
-            } while (true);
+            dati.inviaConnessione();
+            //Thread inviaConnessione = new Thread();
+            //inviaConnessione.Start();
         }
 
         private void btnRiceviConnessione_Click(object sender, RoutedEventArgs e)
@@ -48,17 +43,16 @@ namespace pokemon_showdown_p2p
             }
         }
 
-        public void checkAvanti()
+        private void btnAvanti_Click(object sender, RoutedEventArgs e)
         {
-            do
+            if(dati.connesso)
             {
-
-            } while (!dati.connesso);
-            Gioco = new Gioco(dati, datiGioco);
-            datiGioco.loadDataFromJSON();
-            Gioco.ShowDialog();
-            this.Close();
-
+                Gioco = new Gioco(dati, datiGioco);
+                //principale
+                datiGioco.loadDataFromJSON();
+                Gioco.Show();
+                this.Close();
+            }
         }
     }
 }

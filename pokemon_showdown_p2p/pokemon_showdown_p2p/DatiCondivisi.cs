@@ -22,8 +22,8 @@ namespace pokemon_showdown_p2p
         {
             peerQuesto = new Peer_questo();
             peerConnesso = new Peer_connesso();
-            risAscolto[1] = "nulla";
-            udpClient = new UdpClient(50002); //porta non registrata
+            //risAscolto[1] = "nulla";
+            udpClient = new UdpClient(peerQuesto.port_peer); //porta non registrata
             RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             connesso = false;
 
@@ -96,6 +96,7 @@ namespace pokemon_showdown_p2p
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
                 to_split = Encoding.ASCII.GetString(receive_data); //c;indirizzo;porta;nome;codiceUtente
                 risAscolto = to_split.Split(';');
+                connesso = true;
             }
         }
 
@@ -129,7 +130,7 @@ namespace pokemon_showdown_p2p
 
         public Peer_questo()
         {
-            ip_peer = "";
+            ip_peer = "localhost";
             port_peer = 50002;
             nome_peer = "";
         }
