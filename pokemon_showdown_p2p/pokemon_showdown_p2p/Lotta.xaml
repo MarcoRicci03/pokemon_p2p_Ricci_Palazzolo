@@ -11,8 +11,8 @@
         <Button x:Name="btnMossa2" Content="" HorizontalAlignment="Left" Margin="401,236,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa2_Click"/>
         <Button x:Name="btnMossa3" Content="" HorizontalAlignment="Left" Margin="10,325,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa3_Click"/>
         <Button x:Name="btnMossa4" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="381" Margin="401,325,0,0" Height="84" Click="btnMossa4_Click"/>
-        <Image x:Name="imgPokemonN" HorizontalAlignment="Left" Height="195" Margin="10,10,0,0" VerticalAlignment="Top" Width="381"/>
-        <Image x:Name="imgPokemonA" HorizontalAlignment="Left" Height="200" Margin="401,10,0,0" VerticalAlignment="Top" Width="381" RenderTransformOrigin="0.5,0.5">
+        <Image x:Name="imgPokemonN" HorizontalAlignment="Left" Height="190" Margin="10,10,0,0" VerticalAlignment="Top" Width="381"/>
+        <Image x:Name="imgPokemonA" HorizontalAlignment="Left" Height="189" Margin="401,10,0,0" VerticalAlignment="Top" Width="381" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -22,8 +22,10 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <ProgressBar x:Name="pBNostra" HorizontalAlignment="Left" Height="21" Margin="10,210,0,0" VerticalAlignment="Top" Width="381"/>
-        <ProgressBar x:Name="pBAvversario" HorizontalAlignment="Left" Height="21" Margin="401,210,0,0" VerticalAlignment="Top" Width="381"/>
+        <ProgressBar x:Name="pBNostra" HorizontalAlignment="Left" Height="21" Margin="53,210,0,0" VerticalAlignment="Top" Width="338"/>
+        <ProgressBar x:Name="pBAvversario" HorizontalAlignment="Left" Height="21" Margin="401,210,0,0" VerticalAlignment="Top" Width="338"/>
+        <Label x:Name="lblHPAlleato" Content="" HorizontalAlignment="Left" Margin="10,205,0,0" VerticalAlignment="Top" Width="38"/>
+        <Label x:Name="lblHPAvversario" Content="" HorizontalAlignment="Left" Margin="744,205,0,0" VerticalAlignment="Top" Width="38"/>
 
     </Grid>
 </Window>

@@ -53,6 +53,7 @@ namespace pokemon_showdown_p2p
             //barra della vita avversario
             pBAvversario.Maximum = datiGioco.pokemonNemicoAttuale.HP;
             pBAvversario.Value = datiGioco.pokemonNemicoAttuale.HP;
+            lblHPAvversario.Content = datiGioco.pokemonNemicoAttuale.HP;
             //pokemon alleato
             //pBNostra.Maximum = datiGioco.pokemonAlleatoAttuale.pokemonScelto.HP;
             //pBNostra.Value = datiGioco.pokemonAlleatoAttuale.pokemonScelto.HP;
@@ -92,6 +93,7 @@ namespace pokemon_showdown_p2p
             {
                 //attendo il mio turno
             } while (!datiGioco.mioTurno);
+            aggPagina();
         }
     }
 }
