@@ -36,10 +36,16 @@ namespace pokemon_showdown_p2p
             //Thread aggGrafica = new Thread(datiGioco.aggGrafica);
             //aggGrafica.Start();
             //aggGrafica.Join();
+            aggPagina();
+            //immagine pokemon avversario
+            
+        }
+
+        private void aggPagina()
+        {
             BitmapImage bitimg = new BitmapImage();
             datiGioco.aggGrafica();
 
-            //immagine pokemon avversario
             bitimg.BeginInit();
             bitimg.UriSource = new Uri(@"Properties/" + datiGioco.pokemonNemicoAttuale.hires, UriKind.RelativeOrAbsolute);
             bitimg.EndInit();
