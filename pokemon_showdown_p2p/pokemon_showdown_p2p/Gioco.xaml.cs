@@ -32,8 +32,8 @@ namespace pokemon_showdown_p2p
                 datiGioco.assegnaMosse();
                 Lotta fLotta = new Lotta(datiConnessione, datiGioco, this);
 
-                Thread riceviPacchetto = new Thread(datiConnessione.ricevi);
-                riceviPacchetto.Start();
+                //Thread riceviPacchetto = new Thread(datiConnessione.ricevi);
+                //riceviPacchetto.Start();
 
                 fLotta.Show();
                 this.Hide();
