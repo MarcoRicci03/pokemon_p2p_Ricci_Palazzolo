@@ -53,6 +53,9 @@ namespace pokemon_showdown_p2p
             //barra della vita avversario
             pBAvversario.Maximum = datiGioco.pokemonNemicoAttuale.HP;
             pBAvversario.Value = datiGioco.pokemonNemicoAttuale.HP;
+            //pokemon alleato
+            //pBNostra.Maximum = datiGioco.pokemonAlleatoAttuale.pokemonScelto.HP;
+            //pBNostra.Value = datiGioco.pokemonAlleatoAttuale.pokemonScelto.HP;
         }
 
         private void btnMossa1_Click(object sender, RoutedEventArgs e)

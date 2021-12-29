@@ -130,8 +130,8 @@ namespace pokemon_showdown_p2p
 
         public Peer_questo()
         {
-            ip_peer = "51.182.96.8";
-            port_peer = 667;
+            ip_peer = "192.168.0.19"; //da cambiare ogni volta
+            port_peer = 777; //quelle apert sono 666 da ricci, 667 da palazzolo
             nome_peer = "";
         }
     }

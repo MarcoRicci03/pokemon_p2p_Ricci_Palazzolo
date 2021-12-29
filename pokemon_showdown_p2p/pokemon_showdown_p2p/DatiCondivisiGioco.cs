@@ -85,6 +85,7 @@ namespace pokemon_showdown_p2p
                 if (temp[1] == "p")
                 {
                     pokemonNemicoAttuale = searchListPokemon(Int32.Parse(temp[2]));
+                    refreshMyPokemon(index);
                 }
                 if (temp[1] == "m")
                 {
