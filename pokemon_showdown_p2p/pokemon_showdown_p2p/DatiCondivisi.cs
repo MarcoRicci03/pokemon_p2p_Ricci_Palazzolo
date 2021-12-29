@@ -46,7 +46,7 @@ namespace pokemon_showdown_p2p
                 {
                     risAscolto = v;
                 }
-            } while (true); //da cambiare la condizione
+            } while (false); //da cambiare la condizione
         }
 
         public void riceviConnessione()
@@ -130,8 +130,8 @@ namespace pokemon_showdown_p2p
 
         public Peer_questo()
         {
-            ip_peer = "localhost";
-            port_peer = 50002;
+            ip_peer = "51.182.96.8";
+            port_peer = 667;
             nome_peer = "";
         }
     }

@@ -19,10 +19,13 @@ namespace pokemon_showdown_p2p
 
         Lotta wpfLotta;
 
+        public DatiCondivisi datiConnessione;
 
-        public DatiCondivisiGioco()
+
+        public DatiCondivisiGioco(DatiCondivisi datiConnessione)
         {
             loadDataFromJSON();
+            this.datiConnessione = datiConnessione;
         }
         public CPokemon searchListPokemon(int idEsterno)
         {
@@ -52,7 +55,7 @@ namespace pokemon_showdown_p2p
         {
             this.wpfLotta = wpfLotta;
         }
-        public DatiCondivisi datiConnessione;
+        
         public void setDatiConnessione(DatiCondivisi datiConnessione)
         {
             this.datiConnessione = datiConnessione;
@@ -65,6 +68,7 @@ namespace pokemon_showdown_p2p
             int index = 0, dannoRicevuto = 0;             
             do
             {
+                datiConnessione.ricevi();
                 temp = datiConnessione.risAscolto;
                 datiConnessione.risAscolto = null;
                 if (temp[1] == "p")

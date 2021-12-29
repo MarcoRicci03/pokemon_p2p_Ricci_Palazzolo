@@ -21,7 +21,7 @@ namespace pokemon_showdown_p2p
     public partial class Lotta : Window
     {
         DatiCondivisi datiConnessione;
-        DatiCondivisiGioco datiGioco = new DatiCondivisiGioco();
+        DatiCondivisiGioco datiGioco;
         CPokemon pokemonNemico;
         Gioco WPFGioco;
         int index = 0;

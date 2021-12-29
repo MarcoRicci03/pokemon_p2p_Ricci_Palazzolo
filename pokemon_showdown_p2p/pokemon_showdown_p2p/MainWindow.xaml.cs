@@ -17,16 +17,16 @@ namespace pokemon_showdown_p2p
         {
             InitializeComponent();
             dati = new DatiCondivisi();
-            datiGioco = new DatiCondivisiGioco();
+            datiGioco = new DatiCondivisiGioco(dati);
             isRicevendo = false;
         }
         private void btnMandaConnessione_Click(object sender, RoutedEventArgs e)
         {
             dati.peerConnesso.ip_peer_connesso = txtIpDest.Text;
             dati.peerConnesso.port_peer_connesso = Int32.Parse(txtPortDest.Text);
-            dati.inviaConnessione();
-            //Thread inviaConnessione = new Thread();
-            //inviaConnessione.Start();
+            //dati.inviaConnessione();
+            Thread inviaConnessione = new Thread(dati.inviaConnessione);
+            inviaConnessione.Start();
         }
 
         private void btnRiceviConnessione_Click(object sender, RoutedEventArgs e)
