@@ -32,9 +32,21 @@ namespace pokemon_showdown_p2p
             this.datiGioco = datiGioco;
             this.WPFGioco = WPFGioco; //finestra precedente
             datiGioco.setWpfLotta(this);
-            Thread aggGrafica = new Thread(datiGioco.aggGrafica);
-            aggGrafica.Start();
-            
+
+            //Thread aggGrafica = new Thread(datiGioco.aggGrafica);
+            //aggGrafica.Start();
+            //aggGrafica.Join();
+            BitmapImage bitimg = new BitmapImage();
+            datiGioco.aggGrafica();
+
+            //immagine pokemon avversario
+            bitimg.BeginInit();
+            bitimg.UriSource = new Uri(@"Properties/" + datiGioco.pokemonNemicoAttuale.hires, UriKind.RelativeOrAbsolute);
+            bitimg.EndInit();
+            imgPokemonA.Source = bitimg;
+            //barra della vita avversario
+            pBAvversario.Maximum = datiGioco.pokemonNemicoAttuale.HP;
+            pBAvversario.Value = datiGioco.pokemonNemicoAttuale.HP;
         }
 
         private void btnMossa1_Click(object sender, RoutedEventArgs e)

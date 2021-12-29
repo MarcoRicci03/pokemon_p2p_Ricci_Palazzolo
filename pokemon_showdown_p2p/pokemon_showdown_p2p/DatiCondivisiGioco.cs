@@ -62,27 +62,29 @@ namespace pokemon_showdown_p2p
         }
         public CPokemon pokemonNemicoAttuale { get; set; }
         public CPokemonConMosse pokemonAlleatoAttuale { get; set; }
+        private BitmapImage bitimg = null;
+        private readonly object bitimgLock = new object();
+
+        public BitmapImage getBitimg()
+        {
+            lock (bitimgLock)
+            {
+                return bitimg;
+            }
+        }
         public void aggGrafica()
         {
             string[] temp;
-            int index = 0, dannoRicevuto = 0;             
+            int index = 0, dannoRicevuto = 0;
             do
             {
+                datiConnessione.manda("p;" + listPokemonSelezionati[index].id);
                 datiConnessione.ricevi();
                 temp = datiConnessione.risAscolto;
                 datiConnessione.risAscolto = null;
                 if (temp[1] == "p")
                 {
                     pokemonNemicoAttuale = searchListPokemon(Int32.Parse(temp[2]));
-                    //immagine pokemon avversario
-                    BitmapImage bitimg = new BitmapImage();
-                    bitimg.BeginInit();
-                    bitimg.UriSource = new Uri(@"Properties/" + pokemonNemicoAttuale.hires, UriKind.RelativeOrAbsolute);
-                    bitimg.EndInit();
-                    wpfLotta.imgPokemonA.Source = bitimg;
-                    //barra della vita avversario
-                    wpfLotta.pBAvversario.Maximum = pokemonNemicoAttuale.HP;
-                    wpfLotta.pBAvversario.Value = pokemonNemicoAttuale.HP;
                 }
                 if (temp[1] == "m")
                 {
@@ -104,8 +106,7 @@ namespace pokemon_showdown_p2p
                         }
                     }
                 }
-            } while (true);
-
+            } while (false);
         }
         public void loadDataFromJSON()
         {
@@ -174,10 +175,10 @@ namespace pokemon_showdown_p2p
             wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
         }
 
-        private readonly object balanceLock = new object();
+        private readonly object turnoLock = new object();
         public void setTurno(bool b)
         {
-            lock (balanceLock)
+            lock (turnoLock)
             {
                 mioTurno = b;
             }

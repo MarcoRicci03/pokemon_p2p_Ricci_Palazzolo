@@ -102,7 +102,7 @@ namespace pokemon_showdown_p2p
 
         public void manda(string s)
         {
-            Byte[] send_data = Encoding.ASCII.GetBytes(peerConnesso.port_peer_connesso + ";" + s);
+            Byte[] send_data = Encoding.ASCII.GetBytes(peerQuesto.port_peer + ";" + s);
             udpClient.Connect(peerConnesso.ip_peer_connesso, peerConnesso.port_peer_connesso);
             udpClient.Send(send_data, send_data.Length);
         }
