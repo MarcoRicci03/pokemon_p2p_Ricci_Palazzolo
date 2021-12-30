@@ -19,10 +19,13 @@ namespace pokemon_showdown_p2p
 
         Lotta wpfLotta;
 
+        public DatiCondivisi datiConnessione;
 
-        public DatiCondivisiGioco()
+
+        public DatiCondivisiGioco(DatiCondivisi datiConnessione)
         {
             loadDataFromJSON();
+            this.datiConnessione = datiConnessione;
         }
         public CPokemon searchListPokemon(int idEsterno)
         {
@@ -52,56 +55,57 @@ namespace pokemon_showdown_p2p
         {
             this.wpfLotta = wpfLotta;
         }
-        public DatiCondivisi datiConnessione;
+
         public void setDatiConnessione(DatiCondivisi datiConnessione)
         {
             this.datiConnessione = datiConnessione;
         }
         public CPokemon pokemonNemicoAttuale { get; set; }
         public CPokemonConMosse pokemonAlleatoAttuale { get; set; }
+        private BitmapImage bitimg = null;
+        private readonly object bitimgLock = new object();
+
+        public BitmapImage getBitimg()
+        {
+            lock (bitimgLock)
+            {
+                return bitimg;
+            }
+        }
         public void aggGrafica()
         {
             string[] temp;
-            int index = 0, dannoRicevuto = 0;             
-            do
+            int index = 0, dannoRicevuto = 0;
+            datiConnessione.manda("p;" + listPokemonSelezionati[index].id);
+            datiConnessione.ricevi();
+            temp = datiConnessione.risAscolto;
+            datiConnessione.risAscolto = null;
+            if (temp[1] == "p")
             {
-                temp = datiConnessione.risAscolto;
-                datiConnessione.risAscolto = null;
-                if (temp[1] == "p")
+                pokemonNemicoAttuale = searchListPokemon(Int32.Parse(temp[2]));
+                pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
+                refreshMyPokemon(index);
+            }
+            if (temp[1] == "m")
+            {
+                pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
+                dannoRicevuto = searchListMoves(Int32.Parse(temp[2])).power;
+                pokemonAlleatoAttuale.pokemonScelto.HP -= dannoRicevuto;
+                wpfLotta.pBNostra.Value = pokemonAlleatoAttuale.pokemonScelto.HP;
+                if (pokemonAlleatoAttuale.pokemonScelto.HP <= 0)
                 {
-                    pokemonNemicoAttuale = searchListPokemon(Int32.Parse(temp[2]));
-                    //immagine pokemon avversario
-                    BitmapImage bitimg = new BitmapImage();
-                    bitimg.BeginInit();
-                    bitimg.UriSource = new Uri(@"Properties/" + pokemonNemicoAttuale.hires, UriKind.RelativeOrAbsolute);
-                    bitimg.EndInit();
-                    wpfLotta.imgPokemonA.Source = bitimg;
-                    //barra della vita avversario
-                    wpfLotta.pBAvversario.Maximum = pokemonNemicoAttuale.HP;
-                    wpfLotta.pBAvversario.Value = pokemonNemicoAttuale.HP;
-                }
-                if (temp[1] == "m")
-                {
-                    pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
-                    dannoRicevuto = searchListMoves(Int32.Parse(temp[2])).power;
-                    pokemonAlleatoAttuale.pokemonScelto.HP -= dannoRicevuto;
-                    wpfLotta.pBNostra.Value = pokemonAlleatoAttuale.pokemonScelto.HP;
-                    if (pokemonAlleatoAttuale.pokemonScelto.HP <= 0)
+                    //pokemon sconfitto
+                    if (index < 5)//passo al pokemon dopo
                     {
-                        //pokemon sconfitto
-                        if (index < 5)//passo al pokemon dopo
-                        {
-                            index++;
-                            refreshMyPokemon(index);
-                        }
-                        else
-                        {
-                            //invio pacchetto con sconfitta
-                        }
+                        index++;
+                        refreshMyPokemon(index);
+                    }
+                    else
+                    {
+                        //invio pacchetto con sconfitta
                     }
                 }
-            } while (true);
-
+            }
         }
         public void loadDataFromJSON()
         {
@@ -160,6 +164,7 @@ namespace pokemon_showdown_p2p
             wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[index].move2.ename;
             wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[index].move3.ename;
             wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[index].move4.ename;
+            wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
             BitmapImage bitimg = new BitmapImage();
             bitimg.BeginInit();
             bitimg.UriSource = new Uri(@"Properties/" + listPokemonSelezionati[index].hires, UriKind.RelativeOrAbsolute);
@@ -170,10 +175,10 @@ namespace pokemon_showdown_p2p
             wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
         }
 
-        private readonly object balanceLock = new object();
+        private readonly object turnoLock = new object();
         public void setTurno(bool b)
         {
-            lock (balanceLock)
+            lock (turnoLock)
             {
                 mioTurno = b;
             }

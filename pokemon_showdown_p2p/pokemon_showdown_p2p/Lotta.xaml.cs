@@ -21,7 +21,7 @@ namespace pokemon_showdown_p2p
     public partial class Lotta : Window
     {
         DatiCondivisi datiConnessione;
-        DatiCondivisiGioco datiGioco = new DatiCondivisiGioco();
+        DatiCondivisiGioco datiGioco;
         CPokemon pokemonNemico;
         Gioco WPFGioco;
         int index = 0;
@@ -32,33 +32,68 @@ namespace pokemon_showdown_p2p
             this.datiGioco = datiGioco;
             this.WPFGioco = WPFGioco; //finestra precedente
             datiGioco.setWpfLotta(this);
-            Thread aggGrafica = new Thread(datiGioco.aggGrafica);
-            aggGrafica.Start();
+
+            //Thread aggGrafica = new Thread(datiGioco.aggGrafica);
+            //aggGrafica.Start();
+            //aggGrafica.Join();
+            aggPagina();
+            //immagine pokemon avversario
             
+        }
+
+        private void aggPagina()
+        {
+            BitmapImage bitimg = new BitmapImage();
+            datiGioco.aggGrafica();
+
+            bitimg.BeginInit();
+            bitimg.UriSource = new Uri(@"Properties/" + datiGioco.pokemonNemicoAttuale.hires, UriKind.RelativeOrAbsolute);
+            bitimg.EndInit();
+            imgPokemonA.Source = bitimg;
+            //barra della vita avversario
+            pBAvversario.Maximum = datiGioco.pokemonNemicoAttuale.HP;
+            pBAvversario.Value = datiGioco.pokemonNemicoAttuale.HP;
+            lblHPAvversario.Content = datiGioco.pokemonNemicoAttuale.HP;
+            //pokemon alleato
+            //pBNostra.Maximum = datiGioco.pokemonAlleatoAttuale.pokemonScelto.HP;
+            //pBNostra.Value = datiGioco.pokemonAlleatoAttuale.pokemonScelto.HP;
         }
 
         private void btnMossa1_Click(object sender, RoutedEventArgs e)
         {
             datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move1.id);
             datiGioco.setTurno(false);
+            attesaTurno();
         }
 
         private void btnMossa3_Click(object sender, RoutedEventArgs e)
         {
             datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move3.id);
             datiGioco.setTurno(false);
+            attesaTurno();
         }
 
         private void btnMossa2_Click(object sender, RoutedEventArgs e)
         {
             datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move2.id);
             datiGioco.setTurno(false);
+            attesaTurno();
         }
 
         private void btnMossa4_Click(object sender, RoutedEventArgs e)
         {
             datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move4.id);
             datiGioco.setTurno(false);
+            attesaTurno();
+        }
+
+        public void attesaTurno()
+        {
+            do
+            {
+                //attendo il mio turno
+            } while (!datiGioco.mioTurno);
+            aggPagina();
         }
     }
 }

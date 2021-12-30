@@ -9,10 +9,11 @@
     <Grid>
         <Button x:Name="btnRiceviConnessione" Content="Ricevi Connessione" HorizontalAlignment="Left" Margin="442,224,0,0" VerticalAlignment="Top" Width="120" Height="42" Click="btnRiceviConnessione_Click"/>
         <Button x:Name="btnMandaConnessione" Content="Manda Connessione" HorizontalAlignment="Left" Margin="39,235,0,0" VerticalAlignment="Top" Width="120" Height="41" Click="btnMandaConnessione_Click"/>
-        <TextBox x:Name="txtIpDest" HorizontalAlignment="Left" Height="23" Margin="39,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtIpDest" HorizontalAlignment="Left" Height="23" Margin="39,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="localhost"/>
         <TextBox x:Name="txtPortDest" HorizontalAlignment="Left" Height="23" Margin="39,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="IP" HorizontalAlignment="Left" Margin="164,177,0,0" VerticalAlignment="Top" Height="23"/>
         <Label Content="PORTA" HorizontalAlignment="Left" Margin="164,205,0,0" VerticalAlignment="Top" Height="23" Width="58"/>
+        <Button x:Name="btnAvanti" Content="Avanti" HorizontalAlignment="Left" Margin="707,389,0,0" VerticalAlignment="Top" Width="75" Click="btnAvanti_Click"/>
 
     </Grid>
 </Window>
