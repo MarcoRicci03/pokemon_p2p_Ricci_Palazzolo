@@ -61,7 +61,7 @@ namespace pokemon_showdown_p2p
 
         private void btnMossa1_Click(object sender, RoutedEventArgs e)
         {
-            if(datiGioco.mioTurno == true)
+            if(datiGioco.mioTurno == true && datiGioco.togliPP(1))
             {
                 datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move1.id);
                 datiGioco.setTurno(false);
@@ -71,7 +71,7 @@ namespace pokemon_showdown_p2p
 
         private void btnMossa3_Click(object sender, RoutedEventArgs e)
         {
-            if (datiGioco.mioTurno == true)
+            if (datiGioco.mioTurno == true && datiGioco.togliPP(3))
             {
                 datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move3.id);
                 datiGioco.setTurno(false);
@@ -81,7 +81,7 @@ namespace pokemon_showdown_p2p
 
         private void btnMossa2_Click(object sender, RoutedEventArgs e)
         {
-            if (datiGioco.mioTurno == true)
+            if (datiGioco.mioTurno == true && datiGioco.togliPP(2))
             {
                 datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move2.id);
                 datiGioco.setTurno(false);
@@ -91,7 +91,7 @@ namespace pokemon_showdown_p2p
 
         private void btnMossa4_Click(object sender, RoutedEventArgs e)
         {
-            if (datiGioco.mioTurno == true)
+            if (datiGioco.mioTurno == true && datiGioco.togliPP(4))
             {
                 datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move4.id);
                 datiGioco.setTurno(false);

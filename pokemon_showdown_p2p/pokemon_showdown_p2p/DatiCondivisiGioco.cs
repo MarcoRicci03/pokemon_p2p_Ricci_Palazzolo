@@ -20,6 +20,7 @@ namespace pokemon_showdown_p2p
         Lotta wpfLotta;
 
         public DatiCondivisi datiConnessione;
+        int index = 0;
 
 
         public DatiCondivisiGioco(DatiCondivisi datiConnessione)
@@ -75,7 +76,7 @@ namespace pokemon_showdown_p2p
         public void aggGrafica()
         {
             string[] temp;
-            int index = 0, dannoRicevuto = 0;
+            int dannoRicevuto = 0;
             datiConnessione.manda("p;" + datiConnessione.peerQuesto.port_peer + ";" + listPokemonSelezionati[index].id);
             datiConnessione.ricevi();
             temp = datiConnessione.risAscolto;
@@ -210,6 +211,45 @@ namespace pokemon_showdown_p2p
                 mioTurno = b;
             }
         }
+        public bool togliPP(int nMossa)
+        {
+            bool ok = false;
+            switch (nMossa)
+            {
+                case 1:
+                    if(listPokemonSelezionatiConMosse[index].move1.PP - 1 >= 0)
+                    {
+                        ok = true;
+                        listPokemonSelezionatiConMosse[index].move1.PP -= 1;
+                    }
+                    break;
+
+                case 2:
+                    if (listPokemonSelezionatiConMosse[index].move2.PP - 1 >= 0)
+                    {
+                        ok = true;
+                        listPokemonSelezionatiConMosse[index].move2.PP -= 1;
+                    }
+                    break;
+
+                case 3:
+                    if (listPokemonSelezionatiConMosse[index].move3.PP - 1 >= 0)
+                    {
+                        ok = true;
+                        listPokemonSelezionatiConMosse[index].move3.PP -= 1;
+                    }
+                    break;
+
+                case 4:
+                    if (listPokemonSelezionatiConMosse[index].move4.PP - 1 >= 0)
+                    {
+                        ok = true;
+                        listPokemonSelezionatiConMosse[index].move4.PP -= 1;
+                    }
+                    break;
+            }
+            return ok;
+        }
     }
     public class CPokemon
     {
@@ -234,6 +274,7 @@ namespace pokemon_showdown_p2p
         public int id { get; set; }
         public int power { get; set; }
         public string type { get; set; }
+        public int PP { get; set; }
 
         public CMoves()
         {

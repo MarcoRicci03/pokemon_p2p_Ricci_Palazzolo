@@ -108,6 +108,8 @@ namespace pokemon_showdown_p2p
             udpClient.Connect(peerConnesso.ip_peer, peerConnesso.port_peer);
             udpClient.Send(send_data, send_data.Length);
         }
+
+
     }
 
     public class CPeer
