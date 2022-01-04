@@ -76,17 +76,17 @@ namespace pokemon_showdown_p2p
         {
             string[] temp;
             int index = 0, dannoRicevuto = 0;
-            datiConnessione.manda("p;" + listPokemonSelezionati[index].id);
+            datiConnessione.manda("p;" + datiConnessione.peerQuesto.port_peer + ";" + listPokemonSelezionati[index].id);
             datiConnessione.ricevi();
             temp = datiConnessione.risAscolto;
             datiConnessione.risAscolto = null;
-            if (temp[1] == "p")
+            if (temp[0] == "p")
             {
                 pokemonNemicoAttuale = searchListPokemon(Int32.Parse(temp[2]));
                 pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
                 refreshMyPokemon(index);
             }
-            if (temp[1] == "m")
+            if (temp[0] == "m")
             {
                 pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
                 dannoRicevuto = searchListMoves(Int32.Parse(temp[2])).power;
@@ -156,6 +156,33 @@ namespace pokemon_showdown_p2p
                 listPokemonSelezionatiConMosse.Add(tempPokemon);
             }
         }
+
+        public void scegliTurno() {
+            Random r = new Random();
+            int nRandom;
+            bool finito = false;
+            do
+            {
+                nRandom = r.Next(0, 2);
+                datiConnessione.manda("t;" + datiConnessione.peerQuesto.port_peer + ";" + nRandom.ToString());
+                datiConnessione.ricevi();
+                if (datiConnessione.risAscolto[0] == "t")
+                {
+                    if (nRandom == 1 && Int32.Parse(datiConnessione.risAscolto[2]) == 0)
+                    {
+                        mioTurno = true;
+                        finito = true;
+                    }
+                    else if (nRandom == 0 && Int32.Parse(datiConnessione.risAscolto[2]) == 1)
+                    {
+                        mioTurno = false;
+                        finito = true;
+                    }
+                }
+            } while (!finito);
+            
+        }
+
 
         public void refreshMyPokemon(int index)
         {

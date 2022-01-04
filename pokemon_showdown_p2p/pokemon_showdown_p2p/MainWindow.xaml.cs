@@ -24,7 +24,6 @@ namespace pokemon_showdown_p2p
         {
             dati.peerConnesso.ip_peer = txtIpDest.Text;
             dati.peerConnesso.port_peer = Int32.Parse(txtPortDest.Text);
-            //dati.inviaConnessione();
             Thread inviaConnessione = new Thread(dati.inviaConnessione);
             inviaConnessione.Start();
         }
@@ -45,7 +44,7 @@ namespace pokemon_showdown_p2p
 
         private void btnAvanti_Click(object sender, RoutedEventArgs e)
         {
-            if(!dati.connesso)
+            if(dati.connesso)
             {
                 Gioco = new Gioco(dati, datiGioco);
                 //principale

@@ -22,7 +22,6 @@ namespace pokemon_showdown_p2p
         {
             peerQuesto = new CPeer("localhost", 666, "Marco");
             peerConnesso = new CPeer("", 0, "");
-            //risAscolto[1] = "nulla";
             udpClient = new UdpClient(peerQuesto.port_peer); //porta non registrata
             RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             connesso = false;
@@ -42,7 +41,7 @@ namespace pokemon_showdown_p2p
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
                 to_split = Encoding.ASCII.GetString(receive_data);
                 v = to_split.Split(';');
-                if (Int32.Parse(v[0]) == peerConnesso.port_peer)
+                if (Int32.Parse(v[1]) == peerConnesso.port_peer)
                 {
                     risAscolto = v;
                 }
@@ -96,13 +95,16 @@ namespace pokemon_showdown_p2p
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
                 to_split = Encoding.ASCII.GetString(receive_data); //c;indirizzo;porta;nome;codiceUtente
                 risAscolto = to_split.Split(';');
+                peerConnesso.ip_peer = risAscolto[1];
+                peerConnesso.port_peer = Int32.Parse(risAscolto[2]);
+                peerConnesso.nome_peer = risAscolto[3];
                 connesso = true;
             }
         }
 
         public void manda(string s)
         {
-            Byte[] send_data = Encoding.ASCII.GetBytes(peerQuesto.port_peer + ";" + s);
+            Byte[] send_data = Encoding.ASCII.GetBytes(s);
             udpClient.Connect(peerConnesso.ip_peer, peerConnesso.port_peer);
             udpClient.Send(send_data, send_data.Length);
         }
