@@ -35,6 +35,8 @@ namespace pokemon_showdown_p2p
             aggPagina();
 
             datiGioco.scegliTurno();
+            if (datiGioco.mioTurno == false)
+                attesaTurno();
             //immagine pokemon avversario
 
         }
@@ -99,10 +101,27 @@ namespace pokemon_showdown_p2p
 
         public void attesaTurno()
         {
+            changeAll(false);
+            Thread attesaa = new Thread(attesa);
+            attesaa.Start();
+            
+        }
+
+        public void changeAll(bool b)
+        {
+            btnMossa1.IsEnabled = b;
+            btnMossa2.IsEnabled = b;
+            btnMossa3.IsEnabled = b;
+            btnMossa4.IsEnabled = b;
+        }
+
+        public void attesa()
+        {
             do
             {
-                //attendo il mio turno
+
             } while (!datiGioco.mioTurno);
+            changeAll(true);
             aggPagina();
         }
     }

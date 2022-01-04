@@ -88,7 +88,7 @@ namespace pokemon_showdown_p2p
             }
             if (temp[0] == "m")
             {
-                pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
+                //pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
                 dannoRicevuto = searchListMoves(Int32.Parse(temp[2])).power;
                 pokemonAlleatoAttuale.pokemonScelto.HP -= dannoRicevuto;
                 wpfLotta.pBNostra.Value = pokemonAlleatoAttuale.pokemonScelto.HP;
