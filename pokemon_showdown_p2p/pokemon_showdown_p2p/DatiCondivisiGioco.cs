@@ -73,6 +73,7 @@ namespace pokemon_showdown_p2p
                 return bitimg;
             }
         }
+        public int pippo = 0;
         public void aggGrafica()
         {
             string[] temp;
@@ -108,6 +109,11 @@ namespace pokemon_showdown_p2p
                 }
             }
         }
+
+        public void aggPokemon()
+        {
+
+        }
         public void loadDataFromJSON()
         {
             //leggiamo dati da file JSON
@@ -120,6 +126,10 @@ namespace pokemon_showdown_p2p
             listPokemon = JsonConvert.DeserializeObject<List<CPokemon>>(jsonString);
             //inizializzo liste
             listPokemonSelezionati = new List<CPokemon>();
+            foreach(CPokemon pokemon in listPokemon)
+            {
+                pokemon.HP = pokemon.HP * 3;
+            }
         }
 
         public void assegnaMosse()
@@ -165,6 +175,7 @@ namespace pokemon_showdown_p2p
             do
             {
                 nRandom = r.Next(0, 2);
+                nRandom = 1;
                 datiConnessione.manda("t;" + datiConnessione.peerQuesto.port_peer + ";" + nRandom.ToString());
                 datiConnessione.ricevi();
                 if (datiConnessione.risAscolto[0] == "t")
@@ -188,10 +199,10 @@ namespace pokemon_showdown_p2p
         public void refreshMyPokemon(int index)
         {
             //aggiorno pokemon nostri
-            wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[index].move1.ename;
-            wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[index].move2.ename;
-            wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[index].move3.ename;
-            wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[index].move4.ename;
+            wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[index].move1.ename + " " + listPokemonSelezionatiConMosse[index].move1.power.ToString();
+            wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[index].move2.ename + " " + listPokemonSelezionatiConMosse[index].move2.power.ToString();
+            wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[index].move3.ename + " " + listPokemonSelezionatiConMosse[index].move3.power.ToString();
+            wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[index].move4.ename + " " + listPokemonSelezionatiConMosse[index].move4.power.ToString();
             wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
             BitmapImage bitimg = new BitmapImage();
             bitimg.BeginInit();

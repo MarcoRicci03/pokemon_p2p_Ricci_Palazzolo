@@ -25,6 +25,7 @@ namespace pokemon_showdown_p2p
         CPokemon pokemonNemico;
         Gioco WPFGioco;
         int index = 0;
+        int pippo = 0;
         public Lotta(DatiCondivisi datiConnessione, DatiCondivisiGioco datiGioco, Gioco WPFGioco)
         {
             InitializeComponent();
@@ -33,19 +34,18 @@ namespace pokemon_showdown_p2p
             this.WPFGioco = WPFGioco; //finestra precedente
             datiGioco.setWpfLotta(this);
             aggPagina();
-
-            datiGioco.scegliTurno();
+            if(pippo == 0)
+                datiGioco.scegliTurno();
+            pippo++;
             if (datiGioco.mioTurno == false)
                 attesaTurno();
             //immagine pokemon avversario
 
         }
-
         private void aggPagina()
         {
             BitmapImage bitimg = new BitmapImage();
             datiGioco.aggGrafica();
-
             bitimg.BeginInit();
             bitimg.UriSource = new Uri(@"Properties/" + datiGioco.pokemonNemicoAttuale.hires, UriKind.RelativeOrAbsolute);
             bitimg.EndInit();
@@ -54,17 +54,15 @@ namespace pokemon_showdown_p2p
             pBAvversario.Maximum = datiGioco.pokemonNemicoAttuale.HP;
             pBAvversario.Value = datiGioco.pokemonNemicoAttuale.HP;
             lblHPAvversario.Content = datiGioco.pokemonNemicoAttuale.HP;
-            //pokemon alleato
-            //pBNostra.Maximum = datiGioco.pokemonAlleatoAttuale.pokemonScelto.HP;
-            //pBNostra.Value = datiGioco.pokemonAlleatoAttuale.pokemonScelto.HP;
         }
 
         private void btnMossa1_Click(object sender, RoutedEventArgs e)
         {
             if(datiGioco.mioTurno == true && datiGioco.togliPP(1))
             {
-                datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move1.id);
+                datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.pokemonAlleatoAttuale.move1.id);
                 datiGioco.setTurno(false);
+                //ricevo eventuale nuovo pokemon avversario
                 attesaTurno();
             }
         }
@@ -73,7 +71,7 @@ namespace pokemon_showdown_p2p
         {
             if (datiGioco.mioTurno == true && datiGioco.togliPP(3))
             {
-                datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move3.id);
+                datiConnessione.manda("m;" + datiConnessione.peerConnesso.port_peer + ";" + datiGioco.pokemonAlleatoAttuale.move3.id);
                 datiGioco.setTurno(false);
                 attesaTurno();
             }
@@ -83,7 +81,7 @@ namespace pokemon_showdown_p2p
         {
             if (datiGioco.mioTurno == true && datiGioco.togliPP(2))
             {
-                datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move2.id);
+                datiConnessione.manda("m;" + datiConnessione.peerConnesso.port_peer + ";" + datiGioco.pokemonAlleatoAttuale.move2.id);
                 datiGioco.setTurno(false);
                 attesaTurno();
             }
@@ -93,7 +91,7 @@ namespace pokemon_showdown_p2p
         {
             if (datiGioco.mioTurno == true && datiGioco.togliPP(4))
             {
-                datiConnessione.manda("m;" + datiGioco.pokemonAlleatoAttuale.move4.id);
+                datiConnessione.manda("m;" + datiConnessione.peerConnesso.port_peer + ";" + datiGioco.pokemonAlleatoAttuale.move4.id);
                 datiGioco.setTurno(false);
                 attesaTurno();
             }
@@ -101,9 +99,11 @@ namespace pokemon_showdown_p2p
 
         public void attesaTurno()
         {
+
             changeAll(false);
-            Thread attesaa = new Thread(attesa);
-            attesaa.Start();
+            //Thread attesaa = new Thread(attesa);
+            // attesaa.Start();
+            attesa();
             
         }
 
@@ -119,7 +119,12 @@ namespace pokemon_showdown_p2p
         {
             do
             {
-
+                datiConnessione.ricevi();
+                if (datiConnessione.risAscolto[0] != null)
+                {
+                    datiGioco.setTurno(true);
+                    datiConnessione.risAscolto = null;
+                }
             } while (!datiGioco.mioTurno);
             changeAll(true);
             aggPagina();
