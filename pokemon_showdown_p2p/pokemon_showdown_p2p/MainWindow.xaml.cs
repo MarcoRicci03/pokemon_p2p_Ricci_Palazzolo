@@ -26,6 +26,7 @@ namespace pokemon_showdown_p2p
             dati.peerConnesso.port_peer = Int32.Parse(txtPortDest.Text);
             Thread inviaConnessione = new Thread(dati.inviaConnessione);
             inviaConnessione.Start();
+            datiGioco.setTurno(true);
         }
 
         private void btnRiceviConnessione_Click(object sender, RoutedEventArgs e)
@@ -35,6 +36,7 @@ namespace pokemon_showdown_p2p
                 Thread riceviConnessione = new Thread(dati.riceviConnessione);
                 riceviConnessione.Start();
                 isRicevendo = true;
+                datiGioco.setTurno(false);
             }
             else
             {

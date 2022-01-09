@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace pokemon_showdown_p2p
 {
@@ -24,6 +16,7 @@ namespace pokemon_showdown_p2p
         DatiCondivisiGioco datiGioco;
         Gioco WPFGioco;
         int pippo = 0;
+        BackgroundWorker bg = new BackgroundWorker();
         public Lotta(DatiCondivisi datiConnessione, DatiCondivisiGioco datiGioco, Gioco WPFGioco)
         {
             InitializeComponent();
@@ -32,42 +25,127 @@ namespace pokemon_showdown_p2p
             this.WPFGioco = WPFGioco; //finestra precedente
             datiGioco.setWpfLotta(this);
             datiGioco.aggPokemonMio(-1);
-            //Thread aggiornamentoPagina = new Thread(aggPagina);
-            //aggiornamentoPagina.Start();
-            //aggPagina();
-            if (pippo == 0)
-            {
-                Thread turno = new Thread(prova);
-                turno.Start();
-                //datiGioco.scegliTurno();
-            }
-            
-        }
-        public void prova()
-        {
-            datiGioco.scegliTurno();
-            pippo++;
+            datiConnessione.manda("p;" + datiConnessione.peerQuesto.port_peer.ToString() + ";" + datiGioco.getPokemonAttualeNostro().pokemonScelto.id);
+
+            //avvio i due thread
+            //ricevi
+            Thread ascolta = new Thread(new ThreadStart(datiConnessione.ricevi));
+            ascolta.Start();
+
+            //elabora
+            Thread elabora = new Thread(prova);
+            elabora.Start();
+
             if (datiGioco.mioTurno == false)
                 attesaTurno();
+
         }
-        private void aggPagina()
+
+        private void prova()
         {
-            BitmapImage bitimg = new BitmapImage();
-            datiGioco.aggGrafica();
-            bitimg.BeginInit();
-            bitimg.UriSource = new Uri(@"Properties/" + datiGioco.pokemonAvv.hires, UriKind.RelativeOrAbsolute);
-            bitimg.EndInit();
-            imgPokemonA.Source = bitimg;
+            Random r = new Random();
+
+            string[] temp;
+            int dannoRicevuto = 0, nRandom, nRandomUltimo = 0, valTempRand = -1, sizePrec = -1;
+            do
+            {
+                do
+                {
+                    nRandom = r.Next();
+                }
+                while (nRandom == 0 || datiConnessione.getLista().Count == 0);
+
+                do
+                {
+
+                } while (datiConnessione.getLista().Count == sizePrec);
+
+                temp = datiConnessione.getLista()[datiConnessione.getLista().Count - 1].Split(';');
+                if (valTempRand != -1)
+                {
+                    if (temp[0] == "p" && valTempRand != nRandomUltimo)
+                    {
+                        datiGioco.pokemonAvv = datiGioco.searchListPokemon(Int32.Parse(temp[2]));
+                        Dispatcher.Invoke(() =>
+                        {
+                            datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
+                        });
+                        nRandomUltimo = nRandom;
+                        sizePrec = datiConnessione.getLista().Count;
+                    }
+                    if (temp[0] == "m" && valTempRand != nRandomUltimo)
+                    {
+                        //pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
+                        dannoRicevuto = datiGioco.searchListMoves(Int32.Parse(temp[2])).power;
+                        Dispatcher.Invoke(() =>
+                        {
+                            datiGioco.aggPokemonMio(dannoRicevuto);
+                        });
+                        nRandomUltimo = nRandom;
+                        datiGioco.setTurno(true);
+                        sizePrec = datiConnessione.getLista().Count;
+                    }
+                }
+                else if (temp.Length == 3)
+                {
+                    if (temp[0] == "p")
+                    {
+                        datiGioco.pokemonAvv = datiGioco.searchListPokemon(Int32.Parse(temp[2]));
+                        Dispatcher.Invoke(() =>
+                        {
+                            datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
+                        });
+                        nRandomUltimo = nRandom;
+                        sizePrec = datiConnessione.getLista().Count;
+                    }
+                    if (temp[0] == "m")
+                    {
+                        //pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
+                        dannoRicevuto = datiGioco.searchListMoves(Int32.Parse(temp[2])).power;
+                        Dispatcher.Invoke(() =>
+                        {
+                            datiGioco.aggPokemonMio(dannoRicevuto);
+                        });
+                        nRandomUltimo = nRandom;
+                        datiGioco.setTurno(true);
+                        sizePrec = datiConnessione.getLista().Count;
+                    }
+                }
+                valTempRand = nRandom;
+            } while (true);
         }
+
+        //private void aggPagina()
+        //{
+        //    BitmapImage bitimg = new BitmapImage();
+        //    //datiGioco.aggGrafica();
+        //    bitimg.BeginInit();
+        //    try
+        //    {
+        //        datiGioco.pokemonAvv.hires = null;
+        //    }
+        //    catch (NullReferenceException e)
+        //    {
+        //        Console.WriteLine("ciao");
+        //    }
+
+        //    do
+        //    {
+        //    } while (datiGioco.pokemonAvv.hires == null);
+        //    bitimg.UriSource = new Uri(@"Properties/" + datiGioco.pokemonAvv.hires, UriKind.RelativeOrAbsolute);
+        //    bitimg.EndInit();
+        //    imgPokemonA.Source = bitimg;
+        //}
 
         private void btnMossa1_Click(object sender, RoutedEventArgs e)
         {
-            if(datiGioco.mioTurno == true && datiGioco.togliPP(1))
+            if (datiGioco.mioTurno == true && datiGioco.togliPP(1))
             {
                 datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move1.id);
                 datiGioco.setTurno(false);
+                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.id, -1);
                 //ricevo eventuale nuovo pokemon avversario
-                attesaTurno();
+               // attesaTurno();
             }
         }
 
@@ -77,7 +155,8 @@ namespace pokemon_showdown_p2p
             {
                 datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move3.id);
                 datiGioco.setTurno(false);
-                attesaTurno();
+                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.id, -1);
+                // attesaTurno();
             }
         }
 
@@ -87,7 +166,8 @@ namespace pokemon_showdown_p2p
             {
                 datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move2.id);
                 datiGioco.setTurno(false);
-                attesaTurno();
+                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.id, -1);
+                //attesaTurno();
             }
         }
 
@@ -97,18 +177,15 @@ namespace pokemon_showdown_p2p
             {
                 datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move4.id);
                 datiGioco.setTurno(false);
-                attesaTurno();
+                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.id, -1);
+                //attesaTurno();
             }
         }
 
         public void attesaTurno()
         {
-
-            changeAll(false);
-            //Thread attesaa = new Thread(attesa);
-            // attesaa.Start();
-            attesa();
-            
+            Thread attesaa = new Thread(attesa);
+            attesaa.Start();
         }
 
         public void changeAll(bool b)
@@ -121,15 +198,22 @@ namespace pokemon_showdown_p2p
 
         public void attesa()
         {
+            Dispatcher.Invoke(() =>
+            {
+                changeAll(false);
+            });
             do
             {
-                datiConnessione.ricevi();
+                //datiConnessione.ricevi();
                 if (datiConnessione.risAscolto[0] != null)
                 {
                     datiGioco.setTurno(true);
                 }
             } while (!datiGioco.mioTurno);
-            changeAll(true);
+            Dispatcher.Invoke(() =>
+            {
+                changeAll(true);
+            });
             datiGioco.aggPokemonMio(datiGioco.searchListMoves(Int32.Parse(datiConnessione.risAscolto[2])).power);
             datiConnessione.risAscolto = null;
         }

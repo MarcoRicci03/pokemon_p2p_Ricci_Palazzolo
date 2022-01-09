@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -18,6 +19,8 @@ namespace pokemon_showdown_p2p
         public bool connesso;
         //info ricezione
         public string[] risAscolto { get; set; }
+
+        public List<String> cronologia;
         public DatiCondivisi()
         {
             peerQuesto = new CPeer("localhost", 666, "Marco");
@@ -25,8 +28,19 @@ namespace pokemon_showdown_p2p
             udpClient = new UdpClient(peerQuesto.port_peer); //porta non registrata
             RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             connesso = false;
+            cronologia = new List<string>();
 
             Thread ThreadRiceviConnessione = new Thread(riceviConnessione);
+        }
+
+        private readonly object cron = new object();
+
+        public List<String> getLista()
+        {
+            lock (cron)
+            {
+                return cronologia;
+            }
         }
 
         public void ricevi()
@@ -44,8 +58,9 @@ namespace pokemon_showdown_p2p
                 if (Int32.Parse(v[1]) == peerConnesso.port_peer)
                 {
                     risAscolto = v;
+                    cronologia.Add(to_split);
                 }
-            } while (false); //da cambiare la condizione
+            } while (true); //da cambiare la condizione
         }
 
         public void riceviConnessione()
