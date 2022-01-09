@@ -8,7 +8,7 @@
         Title="selectPokemon" Height="450" Width="800">
     <Grid x:Name="panel">
         <Image x:Name="img" HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="100"/>
-        <ListBox x:Name="listBoxListaPokemon" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="352" Margin="115,10,0,0" VerticalAlignment="Top" Width="220" SelectionChanged="listBoxLista_SelectionChanged"/>
+        <ListBox x:Name="listBoxListaPokemon" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="342" Margin="115,20,0,0" VerticalAlignment="Top" Width="220" SelectionChanged="listBoxLista_SelectionChanged"/>
         <Button x:Name="btnAggiungi" Content="Aggiungi" HorizontalAlignment="Left" Margin="115,367,0,0" VerticalAlignment="Top" Width="75" Click="btnAggiungi_Click"/>
         <Button x:Name="btnConferma" Content="Conferma" HorizontalAlignment="Left" Margin="707,389,0,0" VerticalAlignment="Top" Width="75" Click="btnConferma_Click"/>
         <Label x:Name="lblMAX" Content="" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="442"/>

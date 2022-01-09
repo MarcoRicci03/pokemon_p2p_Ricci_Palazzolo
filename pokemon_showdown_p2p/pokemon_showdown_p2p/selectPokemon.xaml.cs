@@ -25,7 +25,40 @@ namespace pokemon_showdown_p2p
             collectionViewPokemon = new ListCollectionView(datiGioco.listPokemon);
             listBoxListaPokemon.DataContext = collectionViewPokemon;
             collectionViewPokemon.Refresh();
+            caricaLista();
         }
+
+        public void caricaLista() {
+            for (int i = 0; i < datiGioco.listPokemonSelezionati.Count; i++)
+            {
+                BitmapImage bitimg = new BitmapImage();
+                bitimg.BeginInit();
+                bitimg.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[i].hires, UriKind.RelativeOrAbsolute);
+                bitimg.EndInit();
+                switch (i)
+                {
+                    case 0:
+                        imgPokemon1.Source = bitimg;
+                        break;
+                    case 1:
+                        imgPokemon2.Source = bitimg;
+                        break;
+                    case 2:
+                        imgPokemon3.Source = bitimg;
+                        break;
+                    case 3:
+                        imgPokemon4.Source = bitimg;
+                        break;
+                    case 4:
+                        imgPokemon5.Source = bitimg;
+                        break;
+                    case 5:
+                        imgPokemon6.Source = bitimg;
+                        break;
+                }
+            }
+        }
+
 
         private void listBoxLista_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -43,11 +76,11 @@ namespace pokemon_showdown_p2p
             {
                 BitmapImage bitimg = new BitmapImage();
                 bitimg.BeginInit();
-                bitimg.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[datiGioco.listPokemonSelezionati.Count-1].hires, UriKind.RelativeOrAbsolute);
+                bitimg.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[datiGioco.listPokemonSelezionati.Count - 1].hires, UriKind.RelativeOrAbsolute);
                 bitimg.EndInit();
                 switch (datiGioco.listPokemonSelezionati.Count - 1)
                 {
-                   case 0:
+                    case 0:
                         imgPokemon1.Source = bitimg;
                         break;
                     case 1:
@@ -71,7 +104,7 @@ namespace pokemon_showdown_p2p
             {
                 lblMAX.Content = "Puoi selezionare massimo 6 pokemon";
                 datiGioco.listPokemonSelezionati.RemoveAt(datiGioco.listPokemonSelezionati.Count - 1);
-            } 
+            }
         }
 
         private void btnConferma_Click(object sender, RoutedEventArgs e)
@@ -82,66 +115,74 @@ namespace pokemon_showdown_p2p
 
         private void btnRimuovi_Click(object sender, RoutedEventArgs e)
         {
-            if(datiGioco.listPokemonSelezionati.Count != 0)
+            if (datiGioco.listPokemonSelezionati.Count != 0)
             {
-                if(datiGioco.listPokemonSelezionati.Contains(listBoxListaPokemon.SelectedItem))
+                if (datiGioco.listPokemonSelezionati.Contains(listBoxListaPokemon.SelectedItem))
                 {
                     datiGioco.listPokemonSelezionati.Remove(datiGioco.listPokemon[listBoxListaPokemon.SelectedIndex]);
-                    for (int i = 0; i < datiGioco.listPokemonSelezionati.Count + 1; i++)
+                    if (datiGioco.listPokemonSelezionati.Count > 0)
                     {
-                        
-                            BitmapImage bitmapimage = new BitmapImage();
-                        bitmapimage.BeginInit();
-                        bitmapimage.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[i].hires, UriKind.RelativeOrAbsolute);
-                        bitmapimage.EndInit();
-                        if (i + 1 == datiGioco.listPokemonSelezionati.Count)
+                        for (int i = 0; i < datiGioco.listPokemonSelezionati.Count; i++)
                         {
-                            switch (i + 1)
+
+                            BitmapImage bitmapimage = new BitmapImage();
+                            bitmapimage.BeginInit();
+                            bitmapimage.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[i].hires, UriKind.RelativeOrAbsolute);
+                            bitmapimage.EndInit();
+                            if (i + 1 == datiGioco.listPokemonSelezionati.Count)
+                            {
+                                switch (i + 1)
+                                {
+                                    case 0:
+                                        imgPokemon1.Source = null;
+                                        break;
+                                    case 1:
+                                        imgPokemon2.Source = null;
+                                        break;
+                                    case 2:
+                                        imgPokemon3.Source = null;
+                                        break;
+                                    case 3:
+                                        imgPokemon4.Source = null;
+                                        break;
+                                    case 4:
+                                        imgPokemon5.Source = null;
+                                        break;
+                                    case 5:
+                                        imgPokemon6.Source = null;
+                                        break;
+                                }
+                            }
+                            switch (i)
                             {
                                 case 0:
-                                    imgPokemon1.Source = null;
+                                    imgPokemon1.Source = bitmapimage;
                                     break;
                                 case 1:
-                                    imgPokemon2.Source = null;
+                                    imgPokemon2.Source = bitmapimage;
                                     break;
                                 case 2:
-                                    imgPokemon3.Source = null;
+                                    imgPokemon3.Source = bitmapimage;
                                     break;
                                 case 3:
-                                    imgPokemon4.Source = null;
+                                    imgPokemon4.Source = bitmapimage;
                                     break;
                                 case 4:
-                                    imgPokemon5.Source = null;
+                                    imgPokemon5.Source = bitmapimage;
                                     break;
                                 case 5:
-                                    imgPokemon6.Source = null;
+                                    imgPokemon6.Source = bitmapimage;
                                     break;
                             }
                         }
-                        switch (i)
-                        {
-                            case 0:
-                                imgPokemon1.Source = bitmapimage;
-                                break;
-                            case 1:
-                                imgPokemon2.Source = bitmapimage;
-                                break;
-                            case 2:
-                                imgPokemon3.Source = bitmapimage;
-                                break;
-                            case 3:
-                                imgPokemon4.Source = bitmapimage;
-                                break;
-                            case 4:
-                                imgPokemon5.Source = bitmapimage;
-                                break;
-                            case 5:
-                                imgPokemon6.Source = bitmapimage;
-                                break;
-                        }
+                    } else
+                    {
+                        imgPokemon1.Source = null;
                     }
                 }
             }
         }
+
     }
+
 }

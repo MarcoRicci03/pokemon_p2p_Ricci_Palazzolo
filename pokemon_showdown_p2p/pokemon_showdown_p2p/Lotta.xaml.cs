@@ -33,7 +33,7 @@ namespace pokemon_showdown_p2p
             ascolta.Start();
 
             //elabora
-            Thread elabora = new Thread(prova);
+            Thread elabora = new Thread(controlla);
             elabora.Start();
 
             if (datiGioco.mioTurno == false)
@@ -41,7 +41,7 @@ namespace pokemon_showdown_p2p
 
         }
 
-        private void prova()
+        private void controlla()
         {
             Random r = new Random();
 
@@ -84,6 +84,11 @@ namespace pokemon_showdown_p2p
                         nRandomUltimo = nRandom;
                         datiGioco.setTurno(true);
                         sizePrec = datiConnessione.getLista().Count;
+                    }
+                    if (temp[0] == "f" && valTempRand != nRandomUltimo)
+                    {
+                        //chiudo la partita
+                        MessageBox.Show("Prova1", "Prova2", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
                 else if (temp.Length == 3)
