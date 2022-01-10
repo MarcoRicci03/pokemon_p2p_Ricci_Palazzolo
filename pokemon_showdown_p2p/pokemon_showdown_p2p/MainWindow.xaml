@@ -14,6 +14,8 @@
         <Label Content="IP" HorizontalAlignment="Left" Margin="164,177,0,0" VerticalAlignment="Top" Height="23"/>
         <Label Content="PORTA" HorizontalAlignment="Left" Margin="164,205,0,0" VerticalAlignment="Top" Height="23" Width="58"/>
         <Button x:Name="btnAvanti" Content="Avanti" HorizontalAlignment="Left" Margin="707,389,0,0" VerticalAlignment="Top" Width="75" Click="btnAvanti_Click"/>
+        <Label Content="Inserisci il tuo nome:" HorizontalAlignment="Left" Margin="24,22,0,0" VerticalAlignment="Top" Width="229"/>
+        <TextBox x:Name="txtNome" HorizontalAlignment="Left" Height="23" Margin="144,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

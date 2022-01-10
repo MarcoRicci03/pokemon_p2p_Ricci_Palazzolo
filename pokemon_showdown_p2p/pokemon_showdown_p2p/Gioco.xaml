@@ -11,6 +11,7 @@
         <Button x:Name="btnLotta" Content="Lotta" HorizontalAlignment="Left" Margin="309,120,0,0" VerticalAlignment="Top" Width="124" Click="btnLotta_Click"/>
         <Button Content="Esci" HorizontalAlignment="Left" Margin="309,145,0,0" VerticalAlignment="Top" Width="124"/>
         <Label x:Name="lblErrore" Content="" HorizontalAlignment="Left" Margin="297,64,0,0" VerticalAlignment="Top" Width="150"/>
+        <Label x:Name="lblTesto" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="31" Width="266"/>
 
     </Grid>
 </Window>

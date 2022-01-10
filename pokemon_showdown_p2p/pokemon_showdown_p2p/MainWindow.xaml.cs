@@ -22,15 +22,23 @@ namespace pokemon_showdown_p2p
         }
         private void btnMandaConnessione_Click(object sender, RoutedEventArgs e)
         {
-            dati.peerConnesso.ip_peer = txtIpDest.Text;
-            dati.peerConnesso.port_peer = Int32.Parse(txtPortDest.Text);
-            Thread inviaConnessione = new Thread(dati.inviaConnessione);
-            inviaConnessione.Start();
-            datiGioco.setTurno(true);
+            if(txtNome.Text != null && txtNome.Text != "" && txtIpDest.Text != null && txtIpDest.Text != "" && txtPortDest.Text != null && txtPortDest.Text != "")
+            {
+                dati.peerQuesto.nome_peer = txtNome.Text;
+                dati.peerConnesso.ip_peer = txtIpDest.Text;
+                dati.peerConnesso.port_peer = Int32.Parse(txtPortDest.Text);
+                Thread inviaConnessione = new Thread(dati.inviaConnessione);
+                inviaConnessione.Start();
+                datiGioco.setTurno(true);
+            }
+            
         }
 
         private void btnRiceviConnessione_Click(object sender, RoutedEventArgs e)
         {
+            if (txtNome.Text != null && txtNome.Text != "")
+            {
+               dati.peerQuesto.nome_peer = txtNome.Text;
             if (!isRicevendo)
             {
                 Thread riceviConnessione = new Thread(dati.riceviConnessione);
@@ -42,6 +50,8 @@ namespace pokemon_showdown_p2p
             {
                 Console.WriteLine("Il peer è già in ascolto");
             }
+            }
+
         }
 
         private void btnAvanti_Click(object sender, RoutedEventArgs e)

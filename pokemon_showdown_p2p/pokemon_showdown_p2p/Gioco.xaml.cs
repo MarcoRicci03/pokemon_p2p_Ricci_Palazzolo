@@ -16,6 +16,7 @@ namespace pokemon_showdown_p2p
             InitializeComponent();
             this.datiConnessione = dati;
             this.datiGioco = datiGioco;
+            lblTesto.Content = datiConnessione.peerQuesto.nome_peer + " stai giocando contro " + datiConnessione.peerConnesso.nome_peer;
         }
 
         private void btnSelectPokemon_Click(object sender, RoutedEventArgs e)

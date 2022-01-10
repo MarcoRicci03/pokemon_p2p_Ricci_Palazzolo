@@ -160,7 +160,7 @@ namespace pokemon_showdown_p2p
             {
                 datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move3.id);
                 datiGioco.setTurno(false);
-                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.id, -1);
+                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move3.id, -1);
                 // attesaTurno();
             }
         }
@@ -171,7 +171,7 @@ namespace pokemon_showdown_p2p
             {
                 datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move2.id);
                 datiGioco.setTurno(false);
-                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.id, -1);
+                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move2.id, -1);
                 //attesaTurno();
             }
         }
@@ -182,7 +182,7 @@ namespace pokemon_showdown_p2p
             {
                 datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move4.id);
                 datiGioco.setTurno(false);
-                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.id, -1);
+                datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move4.id, -1);
                 //attesaTurno();
             }
         }
@@ -210,10 +210,10 @@ namespace pokemon_showdown_p2p
             do
             {
                 //datiConnessione.ricevi();
-                if (datiConnessione.risAscolto[0] != null)
-                {
-                    datiGioco.setTurno(true);
-                }
+                //if (datiConnessione.risAscolto[0] != null)
+                //{
+                //    datiGioco.setTurno(true);
+                //}
             } while (!datiGioco.mioTurno);
             Dispatcher.Invoke(() =>
             {

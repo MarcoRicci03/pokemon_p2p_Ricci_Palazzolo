@@ -133,10 +133,12 @@ namespace pokemon_showdown_p2p
         public void aggPokemonAvv(int danno, int id)
         {
             CPokemon pokemonn = searchListPokemon(id);
-            if ((listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP - danno) > 0 && danno != -1)
+            if (((int)wpfLotta.pBAvversario.Value - danno) > 0 && danno != -1)
             {
-                wpfLotta.pBAvversario.Value = pokemonAvv.HP - danno;
-                wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+                int temp = (int)wpfLotta.pBAvversario.Value;
+
+                wpfLotta.pBAvversario.Value = temp - danno;
+                wpfLotta.lblHPAlleato.Content = temp - danno;
 
             }
             else if (danno == -1)
