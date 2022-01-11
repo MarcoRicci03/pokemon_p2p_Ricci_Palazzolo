@@ -85,3 +85,12 @@ C:\Users\User\Desktop\palazzolo\tecnologie\5A\progetto\pokemon_p2p_Ricci_Palazzo
 C:\Users\User\Desktop\palazzolo\tecnologie\5A\progetto\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\pokemon_showdown_p2p.csproj.CopyComplete
 C:\Users\User\Desktop\palazzolo\tecnologie\5A\progetto\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\pokemon_showdown_p2p.exe
 C:\Users\User\Desktop\palazzolo\tecnologie\5A\progetto\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\pokemon_showdown_p2p.pdb
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\bin\Debug\Newtonsoft.Json.dll
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\bin\Debug\Newtonsoft.Json.xml
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\Gioco.g.cs
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\Lotta.g.cs
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\selectPokemon.g.cs
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\Gioco.baml
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\Lotta.baml
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\selectPokemon.baml
+E:\Palazzolo\git\pokemon_p2p_Ricci_Palazzolo\pokemon_showdown_p2p\pokemon_showdown_p2p\obj\Debug\pokemon_showdown_p2p.csproj.CopyComplete
