@@ -21,6 +21,7 @@ namespace pokemon_showdown_p2p
             dati = new DatiCondivisi();
             datiGioco = new DatiCondivisiGioco(dati);
             isRicevendo = false;
+            lblIpLocale.Content = "Ecco il tuo indirizzo ip locale: " + dati.peerQuesto.ip_peer;
         }
         private void btnMandaConnessione_Click(object sender, RoutedEventArgs e)
         {

@@ -86,7 +86,10 @@ namespace pokemon_showdown_p2p
         {
             wpfLotta.Dispatcher.Invoke(() =>
             {
-                listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP -= danno;
+                if (danno != -1)
+                {
+                    listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP -= danno;
+                }
                 if (listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP > 0 && danno != -1)
                 {
 
