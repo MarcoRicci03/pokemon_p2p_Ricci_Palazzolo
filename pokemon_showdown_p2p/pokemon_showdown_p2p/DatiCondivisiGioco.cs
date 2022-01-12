@@ -112,7 +112,7 @@ namespace pokemon_showdown_p2p
                     wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                     wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                 }
-                else if(danno != -1 && listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP <= 0)
+                else if (danno != -1 && listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP <= 0)
                 {
                     indexMio++;
                     if (indexMio >= 6)
@@ -256,25 +256,6 @@ namespace pokemon_showdown_p2p
             }
         }
 
-
-        //public void refreshMyPokemon(int index)
-        //{
-        //    //aggiorno pokemon nostri
-        //    wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[index].move1.ename + " " + listPokemonSelezionatiConMosse[index].move1.power.ToString();
-        //    wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[index].move2.ename + " " + listPokemonSelezionatiConMosse[index].move2.power.ToString();
-        //    wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[index].move3.ename + " " + listPokemonSelezionatiConMosse[index].move3.power.ToString();
-        //    wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[index].move4.ename + " " + listPokemonSelezionatiConMosse[index].move4.power.ToString();
-        //    wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
-        //    BitmapImage bitimg = new BitmapImage();
-        //    bitimg.BeginInit();
-        //    bitimg.UriSource = new Uri(@"Properties/" + listPokemonSelezionati[index].hires, UriKind.RelativeOrAbsolute);
-        //    bitimg.EndInit();
-        //    wpfLotta.imgPokemonN.Source = bitimg;
-
-        //    wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
-        //    wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[index].pokemonScelto.HP;
-        //}
-
         private readonly object turnoLock = new object();
         public void setTurno(bool b)
         {
@@ -289,42 +270,52 @@ namespace pokemon_showdown_p2p
         }
         public bool togliPP(int nMossa)
         {
-            bool ok = false;
-            switch (nMossa)
+            try
             {
-                case 1:
-                    if (listPokemonSelezionatiConMosse[indexMio].move1.PP - 1 >= 0)
-                    {
-                        ok = true;
-                        listPokemonSelezionatiConMosse[indexMio].move1.PP -= 1;
-                    }
-                    break;
+                bool ok = false;
+                switch (nMossa)
+                {
+                    case 1:
+                        if (listPokemonSelezionatiConMosse[indexMio].move1.PP - 1 >= 0)
+                        {
+                            ok = true;
+                            listPokemonSelezionatiConMosse[indexMio].move1.PP -= 1;
+                        }
+                        break;
 
-                case 2:
-                    if (listPokemonSelezionatiConMosse[indexMio].move2.PP - 1 >= 0)
-                    {
-                        ok = true;
-                        listPokemonSelezionatiConMosse[indexMio].move2.PP -= 1;
-                    }
-                    break;
+                    case 2:
+                        if (listPokemonSelezionatiConMosse[indexMio].move2.PP - 1 >= 0)
+                        {
+                            ok = true;
+                            listPokemonSelezionatiConMosse[indexMio].move2.PP -= 1;
+                        }
+                        break;
 
-                case 3:
-                    if (listPokemonSelezionatiConMosse[indexMio].move3.PP - 1 >= 0)
-                    {
-                        ok = true;
-                        listPokemonSelezionatiConMosse[indexMio].move3.PP -= 1;
-                    }
-                    break;
+                    case 3:
+                        if (listPokemonSelezionatiConMosse[indexMio].move3.PP - 1 >= 0)
+                        {
+                            ok = true;
+                            listPokemonSelezionatiConMosse[indexMio].move3.PP -= 1;
+                        }
+                        break;
 
-                case 4:
-                    if (listPokemonSelezionatiConMosse[indexMio].move4.PP - 1 >= 0)
-                    {
-                        ok = true;
-                        listPokemonSelezionatiConMosse[indexMio].move4.PP -= 1;
-                    }
-                    break;
+                    case 4:
+                        if (listPokemonSelezionatiConMosse[indexMio].move4.PP - 1 >= 0)
+                        {
+                            ok = true;
+                            listPokemonSelezionatiConMosse[indexMio].move4.PP -= 1;
+                        }
+                        break;
+                }
+                return ok;
+
             }
-            return ok;
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("Ciao!");
+                throw;
+            }
+
         }
     }
     public class CPokemon

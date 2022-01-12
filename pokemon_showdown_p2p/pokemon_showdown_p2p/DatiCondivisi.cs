@@ -9,8 +9,9 @@ namespace pokemon_showdown_p2p
 {
     public class DatiCondivisi
     {
-        public UdpClient udpClient;
-        public IPEndPoint RemoteIpEndPoint;
+        private DatiCondivisiGioco datiGioco;
+        private UdpClient udpClient;
+        private IPEndPoint RemoteIpEndPoint;
         //informazioni di questo peer
         public CPeer peerQuesto { get; set; }
         //info peer connesso
@@ -31,6 +32,11 @@ namespace pokemon_showdown_p2p
             cronologia = new List<string>();
             peerQuesto.ip_peer = getLocalIP();
             Thread ThreadRiceviConnessione = new Thread(riceviConnessione);
+        }
+
+        public void setDatiGioco(DatiCondivisiGioco datiGioco)
+        {
+            this.datiGioco = datiGioco;
         }
 
         private string getLocalIP()
@@ -133,8 +139,6 @@ namespace pokemon_showdown_p2p
             udpClient.Connect(peerConnesso.ip_peer, peerConnesso.port_peer);
             udpClient.Send(send_data, send_data.Length);
         }
-
-
     }
 
     public class CPeer
@@ -142,12 +146,14 @@ namespace pokemon_showdown_p2p
         public String ip_peer { get; set; }
         public int port_peer { get; set; }
         public String nome_peer { get; set; }
+        public String ipport { get; set; }
 
         public CPeer(string ip_peer, int port_peer, string nome_peer)
         {
             this.ip_peer = ip_peer; //da cambiare ogni volta
             this.port_peer = port_peer;
             this.nome_peer = nome_peer;
+            ipport = ip_peer + ":" + port_peer;
         }
     }
 }

@@ -7,18 +7,23 @@
         mc:Ignorable="d"
         Title="selectPokemon" Height="450" Width="800">
     <Grid x:Name="panel">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="197*"/>
+            <ColumnDefinition Width="67*"/>
+        </Grid.ColumnDefinitions>
         <Image x:Name="img" HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="100"/>
         <ListBox x:Name="listBoxListaPokemon" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="342" Margin="115,20,0,0" VerticalAlignment="Top" Width="220" SelectionChanged="listBoxLista_SelectionChanged"/>
         <Button x:Name="btnAggiungi" Content="Aggiungi" HorizontalAlignment="Left" Margin="115,367,0,0" VerticalAlignment="Top" Width="75" Click="btnAggiungi_Click"/>
-        <Button x:Name="btnConferma" Content="Conferma" HorizontalAlignment="Left" Margin="707,389,0,0" VerticalAlignment="Top" Width="75" Click="btnConferma_Click"/>
-        <Label x:Name="lblMAX" Content="" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="442"/>
+        <Button x:Name="btnConferma" Content="Conferma" HorizontalAlignment="Left" Margin="115.918,389,0,0" VerticalAlignment="Top" Width="75" Click="btnConferma_Click" Grid.Column="1"/>
+        <Label x:Name="lblMAX" Content="" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="442" Grid.ColumnSpan="2"/>
         <Image x:Name="imgPokemon1" HorizontalAlignment="Left" Height="100" Margin="340,41,0,0" VerticalAlignment="Top" Width="100"/>
         <Image x:Name="imgPokemon2" HorizontalAlignment="Left" Height="100" Margin="445,41,0,0" VerticalAlignment="Top" Width="100"/>
-        <Image x:Name="imgPokemon3" HorizontalAlignment="Left" Height="100" Margin="550,41,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image x:Name="imgPokemon3" HorizontalAlignment="Left" Height="100" Margin="550,41,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"/>
         <Image x:Name="imgPokemon4" HorizontalAlignment="Left" Height="100" Margin="340,146,0,0" VerticalAlignment="Top" Width="100"/>
         <Image x:Name="imgPokemon5" HorizontalAlignment="Left" Height="100" Margin="445,146,0,0" VerticalAlignment="Top" Width="100"/>
-        <Image x:Name="imgPokemon6" HorizontalAlignment="Left" Height="100" Margin="550,146,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image x:Name="imgPokemon6" HorizontalAlignment="Left" Height="100" Margin="550,146,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"/>
         <Button x:Name="btnRimuovi" Content="Rimuovi" HorizontalAlignment="Left" Margin="195,367,0,0" VerticalAlignment="Top" Width="75" Click="btnRimuovi_Click"/>
+        <Label x:Name="lblDup" Content="" HorizontalAlignment="Left" Margin="354,246,0,0" VerticalAlignment="Top" Width="428" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

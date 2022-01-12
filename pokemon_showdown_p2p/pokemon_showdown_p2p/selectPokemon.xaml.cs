@@ -71,39 +71,46 @@ namespace pokemon_showdown_p2p
 
         private void btnAggiungi_Click(object sender, RoutedEventArgs e)
         {
-            datiGioco.listPokemonSelezionati.Add(datiGioco.listPokemon[listBoxListaPokemon.SelectedIndex]);
-            if (datiGioco.listPokemonSelezionati.Count < 7)
+            if (!datiGioco.listPokemonSelezionati.Contains(datiGioco.listPokemon[listBoxListaPokemon.SelectedIndex]))
             {
-                BitmapImage bitimg = new BitmapImage();
-                bitimg.BeginInit();
-                bitimg.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[datiGioco.listPokemonSelezionati.Count - 1].hires, UriKind.RelativeOrAbsolute);
-                bitimg.EndInit();
-                switch (datiGioco.listPokemonSelezionati.Count - 1)
+                datiGioco.listPokemonSelezionati.Add(datiGioco.listPokemon[listBoxListaPokemon.SelectedIndex]);
+                if (datiGioco.listPokemonSelezionati.Count < 7)
                 {
-                    case 0:
-                        imgPokemon1.Source = bitimg;
-                        break;
-                    case 1:
-                        imgPokemon2.Source = bitimg;
-                        break;
-                    case 2:
-                        imgPokemon3.Source = bitimg;
-                        break;
-                    case 3:
-                        imgPokemon4.Source = bitimg;
-                        break;
-                    case 4:
-                        imgPokemon5.Source = bitimg;
-                        break;
-                    case 5:
-                        imgPokemon6.Source = bitimg;
-                        break;
+                    BitmapImage bitimg = new BitmapImage();
+                    bitimg.BeginInit();
+                    bitimg.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[datiGioco.listPokemonSelezionati.Count - 1].hires, UriKind.RelativeOrAbsolute);
+                    bitimg.EndInit();
+                    switch (datiGioco.listPokemonSelezionati.Count - 1)
+                    {
+                        case 0:
+                            imgPokemon1.Source = bitimg;
+                            break;
+                        case 1:
+                            imgPokemon2.Source = bitimg;
+                            break;
+                        case 2:
+                            imgPokemon3.Source = bitimg;
+                            break;
+                        case 3:
+                            imgPokemon4.Source = bitimg;
+                            break;
+                        case 4:
+                            imgPokemon5.Source = bitimg;
+                            break;
+                        case 5:
+                            imgPokemon6.Source = bitimg;
+                            break;
+                    }
+                }
+                else
+                {
+                    lblMAX.Content = "Puoi selezionare massimo 6 pokemon";
+                    datiGioco.listPokemonSelezionati.RemoveAt(datiGioco.listPokemonSelezionati.Count - 1);
                 }
             }
             else
             {
-                lblMAX.Content = "Puoi selezionare massimo 6 pokemon";
-                datiGioco.listPokemonSelezionati.RemoveAt(datiGioco.listPokemonSelezionati.Count - 1);
+                lblDup.Content = "Non è possibile inserire due pokemon uguali.";
             }
         }
 
@@ -182,7 +189,5 @@ namespace pokemon_showdown_p2p
                 }
             }
         }
-
     }
-
 }

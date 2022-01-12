@@ -202,5 +202,16 @@ namespace pokemon_showdown_p2p
             //datiGioco.aggPokemonMio(datiGioco.searchListMoves(Int32.Parse(datiConnessione.risAscolto[2])).power);
             //datiConnessione.risAscolto = null;
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Console.WriteLine("Closed");
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Console.WriteLine("Closing");
+
+        }
     }
 }

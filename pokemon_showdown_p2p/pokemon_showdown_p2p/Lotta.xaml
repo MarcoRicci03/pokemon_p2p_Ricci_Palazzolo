@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pokemon_showdown_p2p"
         mc:Ignorable="d"
-        Title="Lotta" Height="493.033" Width="843.033">
+        Title="Lotta" Height="493.033" Width="843.033" Closed="Window_Closed" Closing="Window_Closing">
     <Grid>
         <Button x:Name="btnMossa1" Content="" HorizontalAlignment="Left" Margin="28,274,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa1_Click"/>
         <Button x:Name="btnMossa2" Content="" HorizontalAlignment="Left" Margin="426,274,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa2_Click"/>
