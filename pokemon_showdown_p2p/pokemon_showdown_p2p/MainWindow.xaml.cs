@@ -23,9 +23,11 @@ namespace pokemon_showdown_p2p
             isRicevendo = false;
             lblIpLocale.Content = "Ecco il tuo indirizzo ip locale: " + dati.peerQuesto.ip_peer;
         }
+        private bool mandato = false;
+
         private void btnMandaConnessione_Click(object sender, RoutedEventArgs e)
         {
-            if(txtNome.Text != null && txtNome.Text != "" && txtIpDest.Text != null && txtIpDest.Text != "" && txtPortDest.Text != null && txtPortDest.Text != "")
+            if(txtNome.Text != null && txtNome.Text != "" && txtIpDest.Text != null && txtIpDest.Text != "" && txtPortDest.Text != null && txtPortDest.Text != "" && !mandato)
             {
                 dati.peerQuesto.nome_peer = txtNome.Text;
                 dati.peerConnesso.ip_peer = txtIpDest.Text;
@@ -33,6 +35,7 @@ namespace pokemon_showdown_p2p
                 Thread inviaConnessione = new Thread(dati.inviaConnessione);
                 inviaConnessione.Start();
                 datiGioco.setTurno(true);
+                mandato = true;
             }
             
         }

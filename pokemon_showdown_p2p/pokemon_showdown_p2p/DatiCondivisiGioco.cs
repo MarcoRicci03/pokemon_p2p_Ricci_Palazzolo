@@ -112,7 +112,7 @@ namespace pokemon_showdown_p2p
                     wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                     wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                 }
-                else
+                else if(danno != -1 && listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP <= 0)
                 {
                     indexMio++;
                     if (indexMio >= 6)
@@ -134,6 +134,7 @@ namespace pokemon_showdown_p2p
                         wpfLotta.imgPokemonN.Source = bitimg;
                         wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                         wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+                        datiConnessione.manda("p;" + datiConnessione.peerQuesto.port_peer + listPokemonSelezionati[indexMio].id);
                     }
                 }
             });
