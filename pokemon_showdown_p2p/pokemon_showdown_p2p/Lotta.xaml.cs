@@ -65,7 +65,7 @@ namespace pokemon_showdown_p2p
                 {
                     if (temp[0] == "p" && valTempRand != nRandomUltimo)
                     {
-                        datiGioco.pokemonAvv = datiGioco.searchListPokemon(Int32.Parse(temp[2]));
+                        //datiGioco.pokemonAvv = datiGioco.searchListPokemon(Int32.Parse(temp[2]));
                         Dispatcher.Invoke(() =>
                         {
                             datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
@@ -77,10 +77,10 @@ namespace pokemon_showdown_p2p
                     {
                         //pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
                         dannoRicevuto = datiGioco.searchListMoves(Int32.Parse(temp[2])).power;
-                        Dispatcher.Invoke(() =>
-                        {
+                        //Dispatcher.Invoke(() =>
+                        //{
                             datiGioco.aggPokemonMio(dannoRicevuto);
-                        });
+                        //});
                         nRandomUltimo = nRandom;
                         datiGioco.setTurno(true);
                         sizePrec = datiConnessione.getLista().Count;
@@ -109,10 +109,10 @@ namespace pokemon_showdown_p2p
                     {
                         //pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
                         dannoRicevuto = datiGioco.searchListMoves(Int32.Parse(temp[2])).power;
-                        Dispatcher.Invoke(() =>
-                        {
+                        //Dispatcher.Invoke(() =>
+                        //{
                             datiGioco.aggPokemonMio(dannoRicevuto);
-                        });
+                        //});
                         nRandomUltimo = nRandom;
                         datiGioco.setTurno(true);
                         sizePrec = datiConnessione.getLista().Count;
@@ -199,8 +199,8 @@ namespace pokemon_showdown_p2p
             {
                 changeAll(true);
             });
-            datiGioco.aggPokemonMio(datiGioco.searchListMoves(Int32.Parse(datiConnessione.risAscolto[2])).power);
-            datiConnessione.risAscolto = null;
+            //datiGioco.aggPokemonMio(datiGioco.searchListMoves(Int32.Parse(datiConnessione.risAscolto[2])).power);
+            //datiConnessione.risAscolto = null;
         }
     }
 }
