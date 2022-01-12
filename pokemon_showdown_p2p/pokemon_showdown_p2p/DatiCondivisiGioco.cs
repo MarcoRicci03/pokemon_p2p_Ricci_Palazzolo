@@ -84,44 +84,22 @@ namespace pokemon_showdown_p2p
 
         public void aggPokemonMio(int danno)
         {
-            listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP -= danno;
-            if (listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP > 0 && danno != -1)
+            wpfLotta.Dispatcher.Invoke(() =>
             {
-                wpfLotta.Dispatcher.Invoke(() =>
-                                {
-                                    wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-                                    wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-                                });
-            }
-            else if (danno == -1)
-            {
-                wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[indexMio].move1.ename + "\nPower:" + listPokemonSelezionatiConMosse[indexMio].move1.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move1.PP.ToString();
-                wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[indexMio].move2.ename + "\nPower:" + listPokemonSelezionatiConMosse[indexMio].move2.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move2.PP.ToString();
-                wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[indexMio].move3.ename + "\nPower:" + listPokemonSelezionatiConMosse[indexMio].move3.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move3.PP.ToString();
-                wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[indexMio].move4.ename + "\nPower:" + listPokemonSelezionatiConMosse[indexMio].move4.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move4.PP.ToString();
-                wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-                BitmapImage bitimg = new BitmapImage();
-                bitimg.BeginInit();
-                bitimg.UriSource = new Uri(@"Properties/" + listPokemonSelezionati[indexMio].hires, UriKind.RelativeOrAbsolute);
-                bitimg.EndInit();
-                wpfLotta.imgPokemonN.Source = bitimg;
-                wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-                wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-            }
-            else
-            {
-                indexMio++;
-                if (indexMio >= 6)
+                listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP -= danno;
+                if (listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP > 0 && danno != -1)
                 {
-                    perso = true;
-                    datiConnessione.manda("f;" + datiConnessione.peerQuesto.port_peer + ";Hai vinto");
+
+                    wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+                    wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+
                 }
-                else
+                else if (danno == -1)
                 {
-                    wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[indexMio].move1.ename + " " + listPokemonSelezionatiConMosse[indexMio].move1.power.ToString();
-                    wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[indexMio].move2.ename + " " + listPokemonSelezionatiConMosse[indexMio].move2.power.ToString();
-                    wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[indexMio].move3.ename + " " + listPokemonSelezionatiConMosse[indexMio].move3.power.ToString();
-                    wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[indexMio].move4.ename + " " + listPokemonSelezionatiConMosse[indexMio].move4.power.ToString();
+                    wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[indexMio].move1.ename + "\nPower:" + listPokemonSelezionatiConMosse[indexMio].move1.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move1.PP.ToString();
+                    wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[indexMio].move2.ename + "\nPower:" + listPokemonSelezionatiConMosse[indexMio].move2.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move2.PP.ToString();
+                    wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[indexMio].move3.ename + "\nPower:" + listPokemonSelezionatiConMosse[indexMio].move3.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move3.PP.ToString();
+                    wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[indexMio].move4.ename + "\nPower:" + listPokemonSelezionatiConMosse[indexMio].move4.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move4.PP.ToString();
                     wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                     BitmapImage bitimg = new BitmapImage();
                     bitimg.BeginInit();
@@ -131,7 +109,31 @@ namespace pokemon_showdown_p2p
                     wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                     wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                 }
-            }
+                else
+                {
+                    indexMio++;
+                    if (indexMio >= 6)
+                    {
+                        perso = true;
+                        datiConnessione.manda("f;" + datiConnessione.peerQuesto.port_peer + ";Hai vinto");
+                    }
+                    else
+                    {
+                        wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[indexMio].move1.ename + " " + listPokemonSelezionatiConMosse[indexMio].move1.power.ToString();
+                        wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[indexMio].move2.ename + " " + listPokemonSelezionatiConMosse[indexMio].move2.power.ToString();
+                        wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[indexMio].move3.ename + " " + listPokemonSelezionatiConMosse[indexMio].move3.power.ToString();
+                        wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[indexMio].move4.ename + " " + listPokemonSelezionatiConMosse[indexMio].move4.power.ToString();
+                        wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+                        BitmapImage bitimg = new BitmapImage();
+                        bitimg.BeginInit();
+                        bitimg.UriSource = new Uri(@"Properties/" + listPokemonSelezionati[indexMio].hires, UriKind.RelativeOrAbsolute);
+                        bitimg.EndInit();
+                        wpfLotta.imgPokemonN.Source = bitimg;
+                        wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+                        wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+                    }
+                }
+            });
         }
         public void aggPokemonAvv(int danno, int id)
         {
