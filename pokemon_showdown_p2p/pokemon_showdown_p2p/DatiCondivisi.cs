@@ -23,16 +23,26 @@ namespace pokemon_showdown_p2p
         public List<String> cronologia;
         public DatiCondivisi()
         {
-            peerQuesto = new CPeer("localhost", 666, "Marco");
+            peerQuesto = new CPeer("", 666, "");
             peerConnesso = new CPeer("", 0, "");
             udpClient = new UdpClient(peerQuesto.port_peer); //porta non registrata
             RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             connesso = false;
             cronologia = new List<string>();
-
+            peerQuesto.ip_peer = getLocalIP();
             Thread ThreadRiceviConnessione = new Thread(riceviConnessione);
         }
 
+        private string getLocalIP()
+        { 
+            string localIP;
+            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
+            {
+                socket.Connect("8.8.8.8", 65530);
+                IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+                return endPoint.Address.ToString();
+            }
+        }
         private readonly object cron = new object();
 
         public List<String> getLista()

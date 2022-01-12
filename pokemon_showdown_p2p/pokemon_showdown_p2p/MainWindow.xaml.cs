@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 
@@ -56,7 +58,7 @@ namespace pokemon_showdown_p2p
 
         private void btnAvanti_Click(object sender, RoutedEventArgs e)
         {
-            if(dati.connesso)
+            if (dati.connesso)
             {
                 Gioco = new Gioco(dati, datiGioco);
                 //principale
