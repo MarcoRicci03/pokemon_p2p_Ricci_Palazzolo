@@ -134,7 +134,7 @@ namespace pokemon_showdown_p2p
                         wpfLotta.imgPokemonN.Source = bitimg;
                         wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                         wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-                        datiConnessione.manda("p;" + datiConnessione.peerQuesto.port_peer + listPokemonSelezionati[indexMio].id);
+                        datiConnessione.manda("p;" + datiConnessione.peerQuesto.port_peer + ";" + listPokemonSelezionati[indexMio].id);
                     }
                 }
             });
