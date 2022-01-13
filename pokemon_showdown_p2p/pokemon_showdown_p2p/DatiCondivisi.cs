@@ -62,7 +62,7 @@ namespace pokemon_showdown_p2p
         public void ricevi()
         {
             Byte[] receive_data;
-            String to_split;
+            String to_split, temp;
             string[] v;
             do
             {
@@ -71,7 +71,7 @@ namespace pokemon_showdown_p2p
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);
                 to_split = Encoding.ASCII.GetString(receive_data);
                 v = to_split.Split(';');
-                if (Int32.Parse(v[1]) == peerConnesso.port_peer)
+                if (v[1].Equals(peerConnesso.ipport))
                 {
                     risAscolto = v;
                     cronologia.Add(to_split);

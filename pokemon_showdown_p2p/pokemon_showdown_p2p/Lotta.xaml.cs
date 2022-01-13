@@ -25,7 +25,7 @@ namespace pokemon_showdown_p2p
             this.WPFGioco = WPFGioco; //finestra precedente
             datiGioco.setWpfLotta(this);
             datiGioco.aggPokemonMio(-1);
-            datiConnessione.manda("p;" + datiConnessione.peerQuesto.port_peer.ToString() + ";" + datiGioco.getPokemonAttualeNostro().pokemonScelto.id);
+            datiConnessione.manda("p;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().pokemonScelto.id);
 
             //avvio i due thread
             //ricevi
@@ -126,7 +126,7 @@ namespace pokemon_showdown_p2p
         {
             if (datiGioco.mioTurno == true && datiGioco.togliPP(1))
             {
-                datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move1.id);
+                datiConnessione.manda("m;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().move1.id);
                 datiGioco.setTurno(false);
                 datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.power, -1);
                 //ricevo eventuale nuovo pokemon avversario
@@ -138,7 +138,7 @@ namespace pokemon_showdown_p2p
         {
             if (datiGioco.mioTurno == true && datiGioco.togliPP(3))
             {
-                datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move3.id);
+                datiConnessione.manda("m;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().move3.id);
                 datiGioco.setTurno(false);
                 datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move3.power, -1);
                 // attesaTurno();
@@ -149,7 +149,7 @@ namespace pokemon_showdown_p2p
         {
             if (datiGioco.mioTurno == true && datiGioco.togliPP(2))
             {
-                datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move2.id);
+                datiConnessione.manda("m;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().move2.id);
                 datiGioco.setTurno(false);
                 datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move2.power, -1);
                 //attesaTurno();
@@ -160,7 +160,7 @@ namespace pokemon_showdown_p2p
         {
             if (datiGioco.mioTurno == true && datiGioco.togliPP(4))
             {
-                datiConnessione.manda("m;" + datiConnessione.peerQuesto.port_peer + ";" + datiGioco.getPokemonAttualeNostro().move4.id);
+                datiConnessione.manda("m;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().move4.id);
                 datiGioco.setTurno(false);
                 datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move4.power, -1);
                 //attesaTurno();

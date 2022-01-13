@@ -118,7 +118,7 @@ namespace pokemon_showdown_p2p
                     if (indexMio >= 6)
                     {
                         perso = true;
-                        datiConnessione.manda("f;" + datiConnessione.peerQuesto.port_peer + ";Hai vinto");
+                        datiConnessione.manda("f;" + datiConnessione.peerQuesto.ipport + ";Hai vinto");
                     }
                     else
                     {
@@ -134,7 +134,7 @@ namespace pokemon_showdown_p2p
                         wpfLotta.imgPokemonN.Source = bitimg;
                         wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                         wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-                        datiConnessione.manda("p;" + datiConnessione.peerQuesto.port_peer + ";" + listPokemonSelezionati[indexMio].id);
+                        datiConnessione.manda("p;" + datiConnessione.peerQuesto.ipport + ";" + listPokemonSelezionati[indexMio].id);
                     }
                 }
             });
