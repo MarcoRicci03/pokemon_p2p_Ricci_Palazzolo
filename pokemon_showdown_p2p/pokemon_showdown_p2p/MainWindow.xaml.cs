@@ -11,63 +11,68 @@ namespace pokemon_showdown_p2p
     {
         public static DatiCondivisi dati;
         public DatiCondivisiGioco datiGioco;
-        bool isRicevendo, avanti = false;
+        bool isRicevendo;
         Window Gioco;
         public MainWindow()
         {
             InitializeComponent();
             dati = new DatiCondivisi();
-            datiGioco = new DatiCondivisiGioco();
+            datiGioco = new DatiCondivisiGioco(dati);
+            dati.setDatiGioco(datiGioco);
             isRicevendo = false;
-            /*Thread TCheckAvanti = new Thread(checkAvanti);
-            TCheckAvanti.Start();
-            TCheckAvanti.IsBackground = true;*/
-            if(avanti == false)
-            {
-                Gioco = new Gioco(dati, datiGioco);
-                datiGioco.loadDataFromJSON();
-                Gioco.ShowDialog();
-                this.Close();
-            }
+            lblIpLocale.Content = "Ecco il tuo indirizzo ip locale: " + dati.peerQuesto.ip_peer;
         }
+        private bool mandato = false;
+
         private void btnMandaConnessione_Click(object sender, RoutedEventArgs e)
         {
-            dati.ip_peer_connesso = txtIpDest.Text;
-            dati.port_peer_connesso = Int32.Parse(txtPortDest.Text);
-            Thread inviaConnessione = new Thread(dati.inviaConnessione);
-            // Name of the thread is Mythread
-            inviaConnessione.Name = "Thread per ricezione";
-            inviaConnessione.Start();
-            // IsBackground is the property of Thread
-            // which allows thread to run in the background
-            inviaConnessione.IsBackground = true;
+            if (txtNome.Text != null && txtNome.Text != "" && txtIpDest.Text != null && txtIpDest.Text != "" && txtPortDest.Text != null && txtPortDest.Text != "" && !mandato)
+            {
+                dati.peerQuesto.nome_peer = txtNome.Text;
+                dati.peerConnesso.ip_peer = txtIpDest.Text;
+                dati.peerConnesso.port_peer = Int32.Parse(txtPortDest.Text);
+                Thread inviaConnessione = new Thread(dati.inviaConnessione);
+                inviaConnessione.Start();
+                datiGioco.setTurno(true);
+                mandato = true;
+            }
+
         }
 
         private void btnRiceviConnessione_Click(object sender, RoutedEventArgs e)
         {
-            if(!isRicevendo)
+            if (txtNome.Text != null && txtNome.Text != "")
             {
-                Thread riceviConnessione = new Thread(dati.riceviConnessione);
-                // Name of the thread is Mythread
-                riceviConnessione.Name = "Thread per ricezione";
-                riceviConnessione.Start();
-                // IsBackground is the property of Thread
-                // which allows thread to run in the background
-                riceviConnessione.IsBackground = true;
-                isRicevendo = true;
-            } else
-            {
-                Console.WriteLine("Il peer è già in ascolto");
+                dati.peerQuesto.nome_peer = txtNome.Text;
+                if (!isRicevendo)
+                {
+                    Thread riceviConnessione = new Thread(dati.riceviConnessione);
+                    riceviConnessione.Start();
+                    isRicevendo = true;
+                    datiGioco.setTurno(false);
+                }
+                else
+                {
+                    Console.WriteLine("Il peer è già in ascolto");
+                }
             }
         }
 
-        public void checkAvanti()
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //do
-            //{
+            Clipboard.SetText(dati.peerQuesto.ip_peer);
+        }
 
-            //} while (!dati.connesso);
-            avanti = true;
+        private void btnAvanti_Click(object sender, RoutedEventArgs e)
+        {
+            if (dati.connesso)
+            {
+                Gioco = new Gioco(dati, datiGioco, this);
+                //principale
+                datiGioco.loadDataFromJSON();
+                Gioco.Show();
+                this.Hide();
+            }
         }
     }
 }

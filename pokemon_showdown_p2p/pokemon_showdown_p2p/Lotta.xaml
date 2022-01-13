@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pokemon_showdown_p2p"
         mc:Ignorable="d"
-        Title="Lotta" Height="450" Width="800">
+        Title="Lotta" Height="493.033" Width="843.033">
     <Grid>
-        <Button x:Name="btnMossa1" Content="" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="381" Height="84"/>
-        <Button x:Name="btnMossa2" Content="" HorizontalAlignment="Left" Margin="401,236,0,0" VerticalAlignment="Top" Width="381" Height="84"/>
-        <Button x:Name="btnMossa3" Content="" HorizontalAlignment="Left" Margin="10,325,0,0" VerticalAlignment="Top" Width="381" Height="84"/>
-        <Button x:Name="btnMossa4" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="381" Margin="401,325,0,0" Height="84"/>
-        <Image HorizontalAlignment="Left" Height="215" Margin="10,10,0,0" VerticalAlignment="Top" Width="381"/>
-        <Image HorizontalAlignment="Left" Height="215" Margin="401,10,0,0" VerticalAlignment="Top" Width="381" RenderTransformOrigin="0.5,0.5">
+        <Button x:Name="btnMossa1" Content="" HorizontalAlignment="Left" Margin="28,274,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa1_Click"/>
+        <Button x:Name="btnMossa2" Content="" HorizontalAlignment="Left" Margin="426,274,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa2_Click"/>
+        <Button x:Name="btnMossa3" Content="" HorizontalAlignment="Left" Margin="28,363,0,0" VerticalAlignment="Top" Width="381" Height="84" Click="btnMossa3_Click"/>
+        <Button x:Name="btnMossa4" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="381" Margin="426,363,0,0" Height="84" Click="btnMossa4_Click"/>
+        <Image x:Name="imgPokemonN" HorizontalAlignment="Left" Height="190" Margin="28,48,0,0" VerticalAlignment="Top" Width="381"/>
+        <Image x:Name="imgPokemonA" HorizontalAlignment="Left" Height="189" Margin="419,47,0,0" VerticalAlignment="Top" Width="381" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -22,6 +22,23 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
+        <ProgressBar x:Name="pBNostra" HorizontalAlignment="Left" Height="21" Margin="71,248,0,0" VerticalAlignment="Top" Width="338"/>
+        <ProgressBar x:Name="pBAvversario" HorizontalAlignment="Left" Height="21" Margin="426,248,0,0" VerticalAlignment="Top" Width="338"/>
+        <Label x:Name="lblHPAlleato" Content="" HorizontalAlignment="Left" Margin="10,243,0,0" VerticalAlignment="Top" Width="53"/>
+        <Label x:Name="lblHPAvversario" Content="" HorizontalAlignment="Left" Margin="772,243,0,0" VerticalAlignment="Top" Width="53"/>
+        <Label x:Name="lblPokemon1Nostro" Content="1" HorizontalAlignment="Left" Margin="393,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon2Nostro" Content="2" HorizontalAlignment="Left" Margin="372,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon3Nostro" Content="3" HorizontalAlignment="Left" Margin="351,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon4Nostro" Content="4" HorizontalAlignment="Left" Margin="330,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon5Nostro" Content="5" HorizontalAlignment="Left" Margin="309,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon6Nostro" Content="6" HorizontalAlignment="Left" Margin="288,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon6Avv" Content="6" HorizontalAlignment="Left" Margin="524,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon5Avv" Content="5" HorizontalAlignment="Left" Margin="503,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon4Avv" Content="4" HorizontalAlignment="Left" Margin="482,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon3Avv" Content="3" HorizontalAlignment="Left" Margin="461,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon2Avv" Content="2" HorizontalAlignment="Left" Margin="440,17,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPokemon1Avv" Content="1" HorizontalAlignment="Left" Margin="419,17,0,0" VerticalAlignment="Top"/>
+        <Label Content="|" HorizontalAlignment="Left" Margin="409,17,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

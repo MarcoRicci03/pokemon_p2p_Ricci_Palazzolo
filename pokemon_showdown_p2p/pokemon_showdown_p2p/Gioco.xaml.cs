@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace pokemon_showdown_p2p
 {
@@ -20,13 +8,16 @@ namespace pokemon_showdown_p2p
     public partial class Gioco : Window
     {
         public static Window selectPokemon;
+        public Window paginaConnessione;
         DatiCondivisi datiConnessione;
         DatiCondivisiGioco datiGioco;
-        public Gioco(DatiCondivisi dati, DatiCondivisiGioco datiGioco)
+        public Gioco(DatiCondivisi dati, DatiCondivisiGioco datiGioco, Window paginaConnessione)
         {
             InitializeComponent();
             this.datiConnessione = dati;
             this.datiGioco = datiGioco;
+            lblTesto.Content = datiConnessione.peerQuesto.nome_peer + " stai giocando contro " + datiConnessione.peerConnesso.nome_peer;
+            this.paginaConnessione = paginaConnessione;
         }
 
         private void btnSelectPokemon_Click(object sender, RoutedEventArgs e)
@@ -42,6 +33,10 @@ namespace pokemon_showdown_p2p
             {
                 datiGioco.assegnaMosse();
                 Lotta fLotta = new Lotta(datiConnessione, datiGioco, this);
+
+                //Thread riceviPacchetto = new Thread(datiConnessione.ricevi);
+                //riceviPacchetto.Start();
+
                 fLotta.Show();
                 this.Hide();
             }
@@ -49,6 +44,12 @@ namespace pokemon_showdown_p2p
             {
                 lblErrore.Content = "Selezionare 6 pokemon";
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            paginaConnessione.Show();
+            this.Close();
         }
     }
 }
