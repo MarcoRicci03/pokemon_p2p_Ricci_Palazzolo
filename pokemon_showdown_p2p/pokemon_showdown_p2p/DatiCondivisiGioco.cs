@@ -141,25 +141,27 @@ namespace pokemon_showdown_p2p
             });
         }
 
-        private void aggColorHPBar(int ris)
+        private void aggColorHPBar(int player)//1 siamo noi 2 l'avversario
         {
-            
-            
-            if(wpfLotta.pBAvversario.Value <= 50 && wpfLotta.pBAvversario.Value > 20)
+            double valTemp;
+            switch (player)
             {
-                wpfLotta.lblHPAvversario.Background = Brushes.Orange;
-            }else if (wpfLotta.pBAvversario.Value < 20)
-            {
-                wpfLotta.lblHPAvversario.Background = Brushes.Red;
-            }
-
-            if (wpfLotta.pBNostra.Value <= 50 && wpfLotta.pBNostra.Value > 20)
-            {
-                wpfLotta.lblHPAlleato.Background = Brushes.Orange;
-            }
-            else if (wpfLotta.pBNostra.Value < 20)
-            {
-                wpfLotta.lblHPAlleato.Background = Brushes.Red;
+                default:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    valTemp = (wpfLotta.pBAvversario.Maximum * wpfLotta.pBAvversario.Value) / 100;
+                    if (valTemp >= 50) {
+                        wpfLotta.pBAvversario.Background = Brushes.Green;
+                    } else if (valTemp < 50 && valTemp >= 20)
+                    {
+                        wpfLotta.pBAvversario.Background = Brushes.Orange;
+                    } else if (valTemp < 20)
+                    {
+                        wpfLotta.pBAvversario.Background = Brushes.Red;
+                    }
+                    break;
             }
         }
         public void aggPokemonAvv(int danno, int id)
