@@ -141,9 +141,26 @@ namespace pokemon_showdown_p2p
             });
         }
 
-        private void aggColorHPBar()
+        private void aggColorHPBar(int ris)
         {
+            
+            
+            if(wpfLotta.pBAvversario.Value <= 50 && wpfLotta.pBAvversario.Value > 20)
+            {
+                wpfLotta.lblHPAvversario.Background = Brushes.Orange;
+            }else if (wpfLotta.pBAvversario.Value < 20)
+            {
+                wpfLotta.lblHPAvversario.Background = Brushes.Red;
+            }
 
+            if (wpfLotta.pBNostra.Value <= 50 && wpfLotta.pBNostra.Value > 20)
+            {
+                wpfLotta.lblHPAlleato.Background = Brushes.Orange;
+            }
+            else if (wpfLotta.pBNostra.Value < 20)
+            {
+                wpfLotta.lblHPAlleato.Background = Brushes.Red;
+            }
         }
         public void aggPokemonAvv(int danno, int id)
         {
