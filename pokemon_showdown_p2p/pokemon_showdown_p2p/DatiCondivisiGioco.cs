@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace pokemon_showdown_p2p
 {
@@ -45,6 +44,7 @@ namespace pokemon_showdown_p2p
             }
             return pokemonReturn;
         }
+
         public CMoves searchListMoves(int idEsterno)
         {
             CMoves moveReturn = null;
@@ -96,7 +96,7 @@ namespace pokemon_showdown_p2p
                 if (listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP > 0 && danno != -1)
                 {
 
-                    wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP + "/"+ wpfLotta.pBNostra.Maximum;
+                    wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP + "/" + wpfLotta.pBNostra.Maximum;
                     wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                     aggColorHPBar(1);
 
@@ -113,28 +113,54 @@ namespace pokemon_showdown_p2p
                     wpfLotta.imgPokemonN.Source = bitimg;
                     wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                     wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+                    wpfLotta.lblPokemon1Nostro.Background = Brushes.Green;
                 }
-                else if (danno != -1 && listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP <= 0)
+                else if (listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP <= 0)
                 {
-                    indexMio++;
-                    if (indexMio >= 6)
+                    if (indexMio + 1 >= 6)
                     {
                         perso = true;
-                        datiConnessione.manda("f;" + datiConnessione.peerQuesto.ipport + ";Hai vinto");
                     }
                     else
                     {
                         aggButton();
-                        wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP + "/" + listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
+                        wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio + 1].pokemonScelto.HP + "/" + listPokemonSelezionatiConMosse[indexMio + 1].pokemonScelto.HP;
                         wpfLotta.pBNostra.Foreground = Brushes.LightGreen;
                         BitmapImage bitimg = new BitmapImage();
                         bitimg.BeginInit();
-                        bitimg.UriSource = new Uri(@"Properties/" + listPokemonSelezionati[indexMio].hires, UriKind.RelativeOrAbsolute);
+                        bitimg.UriSource = new Uri(@"Properties/" + listPokemonSelezionati[indexMio + 1].hires, UriKind.RelativeOrAbsolute);
                         bitimg.EndInit();
                         wpfLotta.imgPokemonN.Source = bitimg;
-                        wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-                        wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
-                        datiConnessione.manda("p;" + datiConnessione.peerQuesto.ipport + ";" + listPokemonSelezionati[indexMio].id);
+                        wpfLotta.pBNostra.Maximum = listPokemonSelezionatiConMosse[indexMio + 1].pokemonScelto.HP;
+                        wpfLotta.pBNostra.Value = listPokemonSelezionatiConMosse[indexMio + 1].pokemonScelto.HP;
+                        datiConnessione.manda("p;" + datiConnessione.peerQuesto.ipport + ";" + listPokemonSelezionati[indexMio + 1].id);
+                        switch (indexMio)
+                        {
+                            case 0:
+                                wpfLotta.lblPokemon1Nostro.Background = Brushes.Red;
+                                wpfLotta.lblPokemon2Nostro.Background = Brushes.Green;
+                                break;
+                            case 1:
+                                wpfLotta.lblPokemon2Nostro.Background = Brushes.Red;
+                                wpfLotta.lblPokemon3Nostro.Background = Brushes.Green;
+                                break;
+                            case 2:
+                                wpfLotta.lblPokemon3Nostro.Background = Brushes.Red;
+                                wpfLotta.lblPokemon4Nostro.Background = Brushes.Green;
+                                break;
+                            case 3:
+                                wpfLotta.lblPokemon4Nostro.Background = Brushes.Red;
+                                wpfLotta.lblPokemon5Nostro.Background = Brushes.Green;
+                                break;
+                            case 4:
+                                wpfLotta.lblPokemon5Nostro.Background = Brushes.Red;
+                                wpfLotta.lblPokemon6Nostro.Background = Brushes.Green;
+                                break;
+                            case 5:
+                                wpfLotta.lblPokemon6Nostro.Background = Brushes.Red;
+                                break;
+                        }
+                        indexMio++;
                     }
                 }
             });
@@ -293,9 +319,9 @@ namespace pokemon_showdown_p2p
         {
             listPokemonSelezionatiConMosse = new List<CPokemonConMosse>();
             List<CMoves> listMosseTipo = new List<CMoves>();
-            CPokemonConMosse pl;
             Random r = new Random();
             List<CMoves> t;
+            indexMio = 0;
 
             //ciclo che scorre tutte le mosse in relazione a un pokemon
             for (int i = 0; i < listPokemonSelezionati.Count; i++)
@@ -396,7 +422,7 @@ namespace pokemon_showdown_p2p
         public int trovaPokemonPerNome(string nome)
         {
             int pos = -1;
-            foreach(CPokemon pokemon in listPokemon)
+            foreach (CPokemon pokemon in listPokemon)
             {
                 if (pokemon.name.Equals(nome))
                 {
@@ -454,23 +480,23 @@ namespace pokemon_showdown_p2p
             this.move4 = move4;
         }
     }
-    public class CPokemonPerLotta
-    {
-        public string nome { get; set; }
-        public int id { get; set; }
-        public int HP { get; set; }
+    //public class CPokemonPerLotta
+    //{
+    //    public string nome { get; set; }
+    //    public int id { get; set; }
+    //    public int HP { get; set; }
 
-        public CPokemonPerLotta(string nome, int id, int HP)
-        {
-            this.nome = nome;
-            this.id = id;
-            this.HP = HP;
-        }
+    //    public CPokemonPerLotta(string nome, int id, int HP)
+    //    {
+    //        this.nome = nome;
+    //        this.id = id;
+    //        this.HP = HP;
+    //    }
 
-        public string toString()
-        {
-            return nome + "," + id + "," + HP;
-        }
-    }
+    //    public string toString()
+    //    {
+    //        return nome + "," + id + "," + HP;
+    //    }
+    //}
 
 }

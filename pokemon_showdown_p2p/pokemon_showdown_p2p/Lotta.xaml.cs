@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 
 namespace pokemon_showdown_p2p
@@ -16,8 +15,8 @@ namespace pokemon_showdown_p2p
         DatiCondivisi datiConnessione;
         DatiCondivisiGioco datiGioco;
         Gioco WPFGioco;
-        int pippo = 0;
         BackgroundWorker bg = new BackgroundWorker();
+        Thread elabora, ascolta, waitEnd;
         public Lotta(DatiCondivisi datiConnessione, DatiCondivisiGioco datiGioco, Gioco WPFGioco)
         {
             InitializeComponent();
@@ -30,16 +29,30 @@ namespace pokemon_showdown_p2p
 
             //avvio i due thread
             //ricevi
-            Thread ascolta = new Thread(new ThreadStart(datiConnessione.ricevi));
+            ascolta = new Thread(datiConnessione.ricevi);
             ascolta.Start();
 
             //elabora
-            Thread elabora = new Thread(controlla);
+            elabora = new Thread(controlla);
             elabora.Start();
+
+            waitEnd = new Thread(waitEndd);
+            waitEnd.Start();
 
             if (datiGioco.mioTurno == false)
                 attesaTurno();
 
+        }
+
+        private void waitEndd()
+        {
+            elabora.Join();
+            datiConnessione.fineAscolto = true;
+            Dispatcher.Invoke(() =>
+            {
+                WPFGioco.Show();
+                this.Close();
+            });
         }
 
         private void controlla()
@@ -66,7 +79,7 @@ namespace pokemon_showdown_p2p
                 {
                     if (temp[0] == "p" && valTempRand != nRandomUltimo)
                     {
-                            datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
+                        datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
                         nRandomUltimo = nRandom;
                         sizePrec = datiConnessione.getLista().Count;
                     }
@@ -74,18 +87,28 @@ namespace pokemon_showdown_p2p
                     {
                         dannoRicevuto = datiGioco.searchListMoves(Int32.Parse(temp[2])).power;
                         datiGioco.aggPokemonMio(dannoRicevuto);
+                        if (datiGioco.perso)
+                        {
+                            datiConnessione.manda("f;" + datiConnessione.peerQuesto.ipport + ";Hai vinto");
+                            Dispatcher.Invoke(() =>
+                            {
+                                lblHPAlleato.Content = "0/" + pBNostra.Maximum;
+                                pBNostra.Value = 0;
+                            });
+                            Thread.Sleep(2000);
+                            MessageBox.Show("Hai perso :(", "Bella partita.", MessageBoxButton.OK, MessageBoxImage.Information);
+                            sizePrec = -1;
+
+                        }
                         nRandomUltimo = nRandom;
                         datiGioco.setTurno(true);
-                        sizePrec = datiConnessione.getLista().Count;
+                        if(sizePrec != -1)
+                            sizePrec = datiConnessione.getLista().Count;
                     }
                     if (temp[0] == "f" && valTempRand != nRandomUltimo)
                     {
                         Thread.Sleep(2000);
                         MessageBox.Show("Hai vinto!", "Bella partita.", MessageBoxButton.OK, MessageBoxImage.Information);
-                        Dispatcher.Invoke(() =>
-                        {
-                            this.Close();
-                        });
                         sizePrec = -1;
                     }
                 }
@@ -96,7 +119,7 @@ namespace pokemon_showdown_p2p
                         datiGioco.pokemonAvv = datiGioco.searchListPokemon(Int32.Parse(temp[2]));
                         //Dispatcher.Invoke(() =>
                         //{
-                            datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
+                        datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
                         //});
                         nRandomUltimo = nRandom;
                         sizePrec = datiConnessione.getLista().Count;

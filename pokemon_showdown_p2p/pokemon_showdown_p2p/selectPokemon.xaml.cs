@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,10 +12,10 @@ namespace pokemon_showdown_p2p
     /// </summary>
     public partial class selectPokemon : Window
     {
-        ListCollectionView collectionViewPokemon = null;
-        DatiCondivisi dati;
-        DatiCondivisiGioco datiGioco;
-        Window gioco;
+        private ListCollectionView collectionViewPokemon = null;
+        private DatiCondivisi dati;
+        private DatiCondivisiGioco datiGioco;
+        private Window gioco;
         public selectPokemon(DatiCondivisi dati, DatiCondivisiGioco datiGioco, Window gioco)
         {
             InitializeComponent();
@@ -27,15 +26,16 @@ namespace pokemon_showdown_p2p
             listBoxListaPokemon.DataContext = collectionViewPokemon;
             collectionViewPokemon.Refresh();
             caricaLista();
-            for (int i = 0 ; i< datiGioco.tipiPokemon.Count; i++)
+            cmbTipi.Items.Add("");
+            for (int i = 0; i < datiGioco.tipiPokemon.Count; i++)
             {
                 cmbTipi.Items.Add(datiGioco.tipiPokemon[i]);
 
             }
-            
         }
-
-        public void caricaLista() {
+        //metodi per la lista
+        private void caricaLista()
+        {
             for (int i = 0; i < datiGioco.listPokemonSelezionati.Count; i++)
             {
                 BitmapImage bitimg = new BitmapImage();
@@ -66,7 +66,6 @@ namespace pokemon_showdown_p2p
             }
         }
 
-
         private void listBoxLista_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CPokemon pokSel = datiGioco.listPokemon[datiGioco.trovaPokemonPerNome(listBoxListaPokemon.SelectedItem.ToString().Split(' ')[0])];
@@ -77,15 +76,16 @@ namespace pokemon_showdown_p2p
             bitimg.EndInit();
             img.Source = bitimg;
         }
-
+        //metodo per l'aggiunta del pokemon alla lista di pokemon selezionati
         private void btnAggiungi_Click(object sender, RoutedEventArgs e)
         {
+            //prendo il pokemon selezionato cercando la posizione del pokemon nella lista principale, questo serve nel caso dovesse essere attivo un filtro
             CPokemon pokSel = datiGioco.listPokemon[datiGioco.trovaPokemonPerNome(listBoxListaPokemon.SelectedItem.ToString().Split(' ')[0])];
             if (!datiGioco.listPokemonSelezionati.Contains(pokSel))
             {
-                datiGioco.listPokemonSelezionati.Add(pokSel);
-                if (datiGioco.listPokemonSelezionati.Count < 7)
+                if (datiGioco.listPokemonSelezionati.Count < 6)
                 {
+                    datiGioco.listPokemonSelezionati.Add(pokSel);
                     BitmapImage bitimg = new BitmapImage();
                     bitimg.BeginInit();
                     bitimg.UriSource = new Uri(@"Properties/" + pokSel.hires, UriKind.RelativeOrAbsolute);
@@ -115,7 +115,6 @@ namespace pokemon_showdown_p2p
                 else
                 {
                     lblMAX.Content = "Puoi selezionare massimo 6 pokemon";
-                    datiGioco.listPokemonSelezionati.RemoveAt(datiGioco.listPokemonSelezionati.Count - 1);
                 }
             }
             else
@@ -123,25 +122,25 @@ namespace pokemon_showdown_p2p
                 lblDup.Content = "Non è possibile inserire due pokemon uguali.";
             }
         }
-
+        //torno al menu
         private void btnConferma_Click(object sender, RoutedEventArgs e)
         {
             gioco.Show();
             this.Close();
         }
-
+        //rimuovo il pokemon selezionato dalla lista di pokemon selezionati
         private void btnRimuovi_Click(object sender, RoutedEventArgs e)
         {
+            CPokemon pokSel = datiGioco.listPokemon[datiGioco.trovaPokemonPerNome(listBoxListaPokemon.SelectedItem.ToString().Split(' ')[0])];
             if (datiGioco.listPokemonSelezionati.Count != 0)
             {
-                if (datiGioco.listPokemonSelezionati.Contains(listBoxListaPokemon.SelectedItem))
+                if (datiGioco.listPokemonSelezionati.Contains(pokSel))
                 {
-                    datiGioco.listPokemonSelezionati.Remove(datiGioco.listPokemon[listBoxListaPokemon.SelectedIndex]);
+                    datiGioco.listPokemonSelezionati.Remove(pokSel);
                     if (datiGioco.listPokemonSelezionati.Count > 0)
                     {
                         for (int i = 0; i < datiGioco.listPokemonSelezionati.Count; i++)
                         {
-
                             BitmapImage bitmapimage = new BitmapImage();
                             bitmapimage.BeginInit();
                             bitmapimage.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[i].hires, UriKind.RelativeOrAbsolute);
@@ -192,27 +191,27 @@ namespace pokemon_showdown_p2p
                                     break;
                             }
                         }
-                    } else
+                    }
+                    else
                     {
                         imgPokemon1.Source = null;
                     }
                 }
             }
         }
-
+        //aggiorno la lista in base al filtro
         private void cmbTipi_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             collectionViewPokemon.Filter = new Predicate<object>(predicatoTipo);
             collectionViewPokemon.Refresh();
         }
-
+        //condizioni del filtro
         private bool predicatoTipo(object obj)
         {
             CPokemon p = obj as CPokemon;
 
             if (cmbTipi.SelectedIndex.Equals(0))
                 return true;
-
             if (p.type1 == cmbTipi.SelectedItem.ToString() || p.type2 == cmbTipi.SelectedItem.ToString())
                 return true;
             else

@@ -16,8 +16,9 @@ namespace pokemon_showdown_p2p
         public CPeer peerQuesto { get; set; }
         //info peer connesso
         public CPeer peerConnesso { get; set; }
-        
+
         public bool connesso;
+        public bool fineAscolto { get; set; }
         //info ricezione
         public string[] risAscolto { get; set; }
 
@@ -39,8 +40,7 @@ namespace pokemon_showdown_p2p
         }
 
         private string getLocalIP()
-        { 
-            string localIP;
+        {
             using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
             {
                 socket.Connect("8.8.8.8", 65530);
@@ -61,7 +61,7 @@ namespace pokemon_showdown_p2p
         public void ricevi()
         {
             Byte[] receive_data;
-            String to_split, temp;
+            String to_split;
             string[] v;
             do
             {
@@ -75,7 +75,7 @@ namespace pokemon_showdown_p2p
                     risAscolto = v;
                     cronologia.Add(to_split);
                 }
-            } while (true); //da cambiare la condizione
+            } while (!fineAscolto);
         }
 
         public void riceviConnessione()
@@ -84,7 +84,7 @@ namespace pokemon_showdown_p2p
             Byte[] send_data;
             String to_split;
             String[] splitted;
-            
+
             if (!connesso)
             {
                 receive_data = udpClient.Receive(ref RemoteIpEndPoint);

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 
@@ -13,7 +11,7 @@ namespace pokemon_showdown_p2p
     {
         public static DatiCondivisi dati;
         public DatiCondivisiGioco datiGioco;
-        bool isRicevendo, avanti = false;
+        bool isRicevendo;
         Window Gioco;
         public MainWindow()
         {
