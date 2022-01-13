@@ -24,13 +24,12 @@ namespace pokemon_showdown_p2p
         public List<String> cronologia;
         public DatiCondivisi()
         {
-            peerQuesto = new CPeer("", 666, "");
+            peerQuesto = new CPeer(getLocalIP(), 666, "");
             peerConnesso = new CPeer("", 0, "");
             udpClient = new UdpClient(peerQuesto.port_peer); //porta non registrata
             RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             connesso = false;
             cronologia = new List<string>();
-            peerQuesto.ip_peer = getLocalIP();
             Thread ThreadRiceviConnessione = new Thread(riceviConnessione);
         }
 
@@ -94,6 +93,7 @@ namespace pokemon_showdown_p2p
                 peerConnesso.ip_peer = splitted[1];
                 peerConnesso.port_peer = Int32.Parse(splitted[2]);
                 peerConnesso.nome_peer = splitted[3];
+                peerConnesso.ipport = peerConnesso.ip_peer + ":" + peerConnesso.port_peer;
                 connesso = true;
 
                 //invio conferma connessione
@@ -129,6 +129,7 @@ namespace pokemon_showdown_p2p
                 peerConnesso.ip_peer = risAscolto[1];
                 peerConnesso.port_peer = Int32.Parse(risAscolto[2]);
                 peerConnesso.nome_peer = risAscolto[3];
+                peerConnesso.ipport = peerConnesso.ip_peer + ":" + peerConnesso.port_peer;
                 connesso = true;
             }
         }
@@ -150,7 +151,7 @@ namespace pokemon_showdown_p2p
 
         public CPeer(string ip_peer, int port_peer, string nome_peer)
         {
-            this.ip_peer = ip_peer; //da cambiare ogni volta
+            this.ip_peer = ip_peer;
             this.port_peer = port_peer;
             this.nome_peer = nome_peer;
             ipport = ip_peer + ":" + port_peer;

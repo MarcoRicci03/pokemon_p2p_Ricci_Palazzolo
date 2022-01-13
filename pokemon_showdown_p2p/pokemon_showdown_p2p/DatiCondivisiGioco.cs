@@ -139,6 +139,11 @@ namespace pokemon_showdown_p2p
                 }
             });
         }
+
+        private void aggColorHPBar()
+        {
+
+        }
         public void aggPokemonAvv(int danno, int id)
         {
             CPokemon pokemonn = new CPokemon();
