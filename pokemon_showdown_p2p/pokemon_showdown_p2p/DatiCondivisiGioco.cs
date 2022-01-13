@@ -21,7 +21,7 @@ namespace pokemon_showdown_p2p
         private int contPokAvv;
 
         public DatiCondivisi datiConnessione;
-        int indexMio = 0;
+        public int indexMio { get; set; }
         public Boolean perso { get; set; }
 
         public DatiCondivisiGioco(DatiCondivisi datiConnessione)
@@ -29,6 +29,7 @@ namespace pokemon_showdown_p2p
             loadDataFromJSON();
             this.datiConnessione = datiConnessione;
             contPokAvv = -1;
+            indexMio = 0;
         }
         public CPokemon searchListPokemon(int idEsterno)
         {
@@ -273,17 +274,20 @@ namespace pokemon_showdown_p2p
         {
             return mioTurno;
         }
-        public bool togliPP(int nMossa)
+        public int togliPP(int nMossa)
         {
-            try
+            int ok = 2; //0=va bene    1=pp finiti ma ultima mossa     2=pp finiti
+            if (indexMio < 6)
             {
-                bool ok = false;
                 switch (nMossa)
                 {
                     case 1:
                         if (listPokemonSelezionatiConMosse[indexMio].move1.PP - 1 >= 0)
                         {
-                            ok = true;
+                            if (listPokemonSelezionatiConMosse[indexMio].move1.PP - 1 == 0)
+                                ok = 1;
+                            else
+                                ok = 0;
                             listPokemonSelezionatiConMosse[indexMio].move1.PP -= 1;
                         }
                         break;
@@ -291,7 +295,10 @@ namespace pokemon_showdown_p2p
                     case 2:
                         if (listPokemonSelezionatiConMosse[indexMio].move2.PP - 1 >= 0)
                         {
-                            ok = true;
+                            if (listPokemonSelezionatiConMosse[indexMio].move2.PP - 1 == 0)
+                                ok = 1;
+                            else
+                                ok = 0;
                             listPokemonSelezionatiConMosse[indexMio].move2.PP -= 1;
                         }
                         break;
@@ -299,7 +306,10 @@ namespace pokemon_showdown_p2p
                     case 3:
                         if (listPokemonSelezionatiConMosse[indexMio].move3.PP - 1 >= 0)
                         {
-                            ok = true;
+                            if (listPokemonSelezionatiConMosse[indexMio].move3.PP - 1 == 0)
+                                ok = 1;
+                            else
+                                ok = 0;
                             listPokemonSelezionatiConMosse[indexMio].move3.PP -= 1;
                         }
                         break;
@@ -307,20 +317,16 @@ namespace pokemon_showdown_p2p
                     case 4:
                         if (listPokemonSelezionatiConMosse[indexMio].move4.PP - 1 >= 0)
                         {
-                            ok = true;
+                            if (listPokemonSelezionatiConMosse[indexMio].move4.PP - 1 == 0)
+                                ok = 1;
+                            else
+                                ok = 0;
                             listPokemonSelezionatiConMosse[indexMio].move4.PP -= 1;
                         }
                         break;
                 }
-                return ok;
-
             }
-            catch (IndexOutOfRangeException e)
-            {
-                Console.WriteLine("Ciao!");
-                throw;
-            }
-
+            return ok;
         }
     }
     public class CPokemon
