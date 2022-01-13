@@ -12,7 +12,7 @@
             <ColumnDefinition Width="67*"/>
         </Grid.ColumnDefinitions>
         <Image x:Name="img" HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="100"/>
-        <ListBox x:Name="listBoxListaPokemon" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="342" Margin="115,20,0,0" VerticalAlignment="Top" Width="220" SelectionChanged="listBoxLista_SelectionChanged"/>
+        <ListBox x:Name="listBoxListaPokemon" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="321" Margin="115,41,0,0" VerticalAlignment="Top" Width="220" SelectionChanged="listBoxLista_SelectionChanged"/>
         <Button x:Name="btnAggiungi" Content="Aggiungi" HorizontalAlignment="Left" Margin="115,367,0,0" VerticalAlignment="Top" Width="75" Click="btnAggiungi_Click"/>
         <Button x:Name="btnConferma" Content="Conferma" HorizontalAlignment="Left" Margin="115.918,389,0,0" VerticalAlignment="Top" Width="75" Click="btnConferma_Click" Grid.Column="1"/>
         <Label x:Name="lblMAX" Content="" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="442" Grid.ColumnSpan="2"/>
@@ -24,6 +24,9 @@
         <Image x:Name="imgPokemon6" HorizontalAlignment="Left" Height="100" Margin="550,146,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"/>
         <Button x:Name="btnRimuovi" Content="Rimuovi" HorizontalAlignment="Left" Margin="195,367,0,0" VerticalAlignment="Top" Width="75" Click="btnRimuovi_Click"/>
         <Label x:Name="lblDup" Content="" HorizontalAlignment="Left" Margin="354,246,0,0" VerticalAlignment="Top" Width="428" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="txtDesc" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="172" Width="100"/>
+        <ComboBox x:Name="cmbTipi" HorizontalAlignment="Left" Margin="215,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbTipi_SelectionChanged"/>
+        <Label Content="Cerca per tipo:" HorizontalAlignment="Left" Margin="115,6,0,0" VerticalAlignment="Top" Width="95"/>
 
     </Grid>
 </Window>

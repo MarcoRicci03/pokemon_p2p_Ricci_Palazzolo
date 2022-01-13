@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,12 @@ namespace pokemon_showdown_p2p
             listBoxListaPokemon.DataContext = collectionViewPokemon;
             collectionViewPokemon.Refresh();
             caricaLista();
+            for (int i = 0 ; i< datiGioco.tipiPokemon.Count; i++)
+            {
+                cmbTipi.Items.Add(datiGioco.tipiPokemon[i]);
+
+            }
+            
         }
 
         public void caricaLista() {
@@ -62,23 +69,26 @@ namespace pokemon_showdown_p2p
 
         private void listBoxLista_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            CPokemon pokSel = datiGioco.listPokemon[datiGioco.trovaPokemonPerNome(listBoxListaPokemon.SelectedItem.ToString().Split(' ')[0])];
+            txtDesc.Text = pokSel.description;
             BitmapImage bitimg = new BitmapImage();
             bitimg.BeginInit();
-            bitimg.UriSource = new Uri(@"Properties/" + datiGioco.listPokemon[listBoxListaPokemon.SelectedIndex].hires, UriKind.RelativeOrAbsolute);
+            bitimg.UriSource = new Uri(@"Properties/" + pokSel.hires, UriKind.RelativeOrAbsolute);
             bitimg.EndInit();
             img.Source = bitimg;
         }
 
         private void btnAggiungi_Click(object sender, RoutedEventArgs e)
         {
-            if (!datiGioco.listPokemonSelezionati.Contains(datiGioco.listPokemon[listBoxListaPokemon.SelectedIndex]))
+            CPokemon pokSel = datiGioco.listPokemon[datiGioco.trovaPokemonPerNome(listBoxListaPokemon.SelectedItem.ToString().Split(' ')[0])];
+            if (!datiGioco.listPokemonSelezionati.Contains(pokSel))
             {
-                datiGioco.listPokemonSelezionati.Add(datiGioco.listPokemon[listBoxListaPokemon.SelectedIndex]);
+                datiGioco.listPokemonSelezionati.Add(pokSel);
                 if (datiGioco.listPokemonSelezionati.Count < 7)
                 {
                     BitmapImage bitimg = new BitmapImage();
                     bitimg.BeginInit();
-                    bitimg.UriSource = new Uri(@"Properties/" + datiGioco.listPokemonSelezionati[datiGioco.listPokemonSelezionati.Count - 1].hires, UriKind.RelativeOrAbsolute);
+                    bitimg.UriSource = new Uri(@"Properties/" + pokSel.hires, UriKind.RelativeOrAbsolute);
                     bitimg.EndInit();
                     switch (datiGioco.listPokemonSelezionati.Count - 1)
                     {
@@ -188,6 +198,25 @@ namespace pokemon_showdown_p2p
                     }
                 }
             }
+        }
+
+        private void cmbTipi_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            collectionViewPokemon.Filter = new Predicate<object>(predicatoTipo);
+            collectionViewPokemon.Refresh();
+        }
+
+        private bool predicatoTipo(object obj)
+        {
+            CPokemon p = obj as CPokemon;
+
+            if (cmbTipi.SelectedIndex.Equals(0))
+                return true;
+
+            if (p.type1 == cmbTipi.SelectedItem.ToString() || p.type2 == cmbTipi.SelectedItem.ToString())
+                return true;
+            else
+                return false;
         }
     }
 }

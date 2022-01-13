@@ -9,14 +9,16 @@ namespace pokemon_showdown_p2p
     public partial class Gioco : Window
     {
         public static Window selectPokemon;
+        public Window paginaConnessione;
         DatiCondivisi datiConnessione;
         DatiCondivisiGioco datiGioco;
-        public Gioco(DatiCondivisi dati, DatiCondivisiGioco datiGioco)
+        public Gioco(DatiCondivisi dati, DatiCondivisiGioco datiGioco, Window paginaConnessione)
         {
             InitializeComponent();
             this.datiConnessione = dati;
             this.datiGioco = datiGioco;
             lblTesto.Content = datiConnessione.peerQuesto.nome_peer + " stai giocando contro " + datiConnessione.peerConnesso.nome_peer;
+            this.paginaConnessione = paginaConnessione;
         }
 
         private void btnSelectPokemon_Click(object sender, RoutedEventArgs e)
@@ -43,6 +45,12 @@ namespace pokemon_showdown_p2p
             {
                 lblErrore.Content = "Selezionare 6 pokemon";
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            paginaConnessione.Show();
+            this.Close();
         }
     }
 }

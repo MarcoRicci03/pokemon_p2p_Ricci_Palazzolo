@@ -60,15 +60,20 @@ namespace pokemon_showdown_p2p
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(dati.peerQuesto.ip_peer);
+        }
+
         private void btnAvanti_Click(object sender, RoutedEventArgs e)
         {
             if (dati.connesso)
             {
-                Gioco = new Gioco(dati, datiGioco);
+                Gioco = new Gioco(dati, datiGioco, this);
                 //principale
                 datiGioco.loadDataFromJSON();
                 Gioco.Show();
-                this.Close();
+                this.Hide();
             }
         }
     }

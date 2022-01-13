@@ -66,43 +66,38 @@ namespace pokemon_showdown_p2p
                 {
                     if (temp[0] == "p" && valTempRand != nRandomUltimo)
                     {
-                        //datiGioco.pokemonAvv = datiGioco.searchListPokemon(Int32.Parse(temp[2]));
-                        Dispatcher.Invoke(() =>
-                        {
                             datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
-                        });
                         nRandomUltimo = nRandom;
                         sizePrec = datiConnessione.getLista().Count;
                     }
                     if (temp[0] == "m" && valTempRand != nRandomUltimo)
                     {
-                        //pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
                         dannoRicevuto = datiGioco.searchListMoves(Int32.Parse(temp[2])).power;
-                        //Dispatcher.Invoke(() =>
-                        //{
                         datiGioco.aggPokemonMio(dannoRicevuto);
-                        //});
                         nRandomUltimo = nRandom;
                         datiGioco.setTurno(true);
                         sizePrec = datiConnessione.getLista().Count;
                     }
                     if (temp[0] == "f" && valTempRand != nRandomUltimo)
                     {
-                        //chiudo la partita
+                        Thread.Sleep(2000);
                         MessageBox.Show("Hai vinto!", "Bella partita.", MessageBoxButton.OK, MessageBoxImage.Information);
-                        nRandomUltimo = nRandom;
-                        sizePrec = datiConnessione.getLista().Count;
+                        Dispatcher.Invoke(() =>
+                        {
+                            this.Close();
+                        });
+                        sizePrec = -1;
                     }
                 }
-                else if (temp.Length == 3)
+                else
                 {
                     if (temp[0] == "p")
                     {
                         datiGioco.pokemonAvv = datiGioco.searchListPokemon(Int32.Parse(temp[2]));
-                        Dispatcher.Invoke(() =>
-                        {
+                        //Dispatcher.Invoke(() =>
+                        //{
                             datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
-                        });
+                        //});
                         nRandomUltimo = nRandom;
                         sizePrec = datiConnessione.getLista().Count;
                     }
@@ -120,7 +115,7 @@ namespace pokemon_showdown_p2p
                     }
                 }
                 valTempRand = nRandom;
-            } while (true);
+            } while (sizePrec != -1);
         }
 
         private void btnMossa1_Click(object sender, RoutedEventArgs e)
