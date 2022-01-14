@@ -12,11 +12,12 @@ namespace pokemon_showdown_p2p
     /// </summary>
     public partial class Lotta : Window
     {
-        DatiCondivisi datiConnessione;
-        DatiCondivisiGioco datiGioco;
-        Gioco WPFGioco;
-        BackgroundWorker bg = new BackgroundWorker();
-        Thread elabora, ascolta, waitEnd;
+        private DatiCondivisi datiConnessione;
+        private DatiCondivisiGioco datiGioco;
+        private Gioco WPFGioco;
+        private BackgroundWorker bg = new BackgroundWorker();
+        private Thread elabora, ascolta, waitEnd, waitTurno;
+        private Boolean fineAttesaTurno = false;
         public Lotta(DatiCondivisi datiConnessione, DatiCondivisiGioco datiGioco, Gioco WPFGioco)
         {
             InitializeComponent();
@@ -39,14 +40,16 @@ namespace pokemon_showdown_p2p
             waitEnd = new Thread(waitEndd);
             waitEnd.Start();
 
-            if (datiGioco.mioTurno == false)
-                attesaTurno();
-
+            //if (datiGioco.mioTurno == false)
+            //    attesaTurno();
+            waitTurno = new Thread(attesa);
+            waitTurno.Start();
         }
 
         private void waitEndd()
         {
             elabora.Join();
+            fineAttesaTurno = true;
             datiConnessione.fineAscolto = true;
             Dispatcher.Invoke(() =>
             {
@@ -102,7 +105,7 @@ namespace pokemon_showdown_p2p
                         }
                         nRandomUltimo = nRandom;
                         datiGioco.setTurno(true);
-                        if(sizePrec != -1)
+                        if (sizePrec != -1)
                             sizePrec = datiConnessione.getLista().Count;
                     }
                     if (temp[0] == "f" && valTempRand != nRandomUltimo)
@@ -237,12 +240,6 @@ namespace pokemon_showdown_p2p
             }
         }
 
-        public void attesaTurno()
-        {
-            Thread attesaa = new Thread(attesa);
-            attesaa.Start();
-        }
-
         public void changeAll(bool b)
         {
             btnMossa1.IsEnabled = b;
@@ -253,24 +250,25 @@ namespace pokemon_showdown_p2p
 
         public void attesa()
         {
-            Dispatcher.Invoke(() =>
-            {
-                changeAll(false);
-            });
             do
             {
-                //datiConnessione.ricevi();
-                //if (datiConnessione.risAscolto[0] != null)
-                //{
-                //    datiGioco.setTurno(true);
-                //}
-            } while (!datiGioco.mioTurno);
-            Dispatcher.Invoke(() =>
-            {
-                changeAll(true);
-            });
-            //datiGioco.aggPokemonMio(datiGioco.searchListMoves(Int32.Parse(datiConnessione.risAscolto[2])).power);
-            //datiConnessione.risAscolto = null;
+                do
+                {
+
+                } while (datiGioco.getTurno());
+                Dispatcher.Invoke(() =>
+                {
+                    changeAll(false);
+                });
+                do
+                {
+
+                } while (!datiGioco.mioTurno);
+                Dispatcher.Invoke(() =>
+                {
+                    changeAll(true);
+                });
+            } while (!fineAttesaTurno);
         }
     }
 }
