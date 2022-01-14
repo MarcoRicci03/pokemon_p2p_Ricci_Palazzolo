@@ -9,25 +9,26 @@ namespace pokemon_showdown_p2p
 {
     public class DatiCondivisiGioco
     {
-        public bool mioTurno { get; set; }
         public List<string> tipiPokemon { get; set; }
         public List<CMoves> listMosse { get; set; } //lista delle mosse
         public List<CPokemon> listPokemon { get; set; } //lista di tutti i pokemon basica
         public List<CPokemon> listPokemonSelezionati { get; set; } //lista pokemon selezionati basica
         public List<CPokemonConMosse> listPokemonSelezionatiConMosse { get; set; } //lista dei pokemon selezionati con mosse assegnate
-
+        //finestra per modificar i dati
         Lotta wpfLotta;
-
-        private int contPokAvv;
-
-        public DatiCondivisi datiConnessione;
-        public int indexMio { get; set; }
+        //boolean
         public Boolean perso { get; set; }
+        public bool mioTurno { get; set; }
+        //dati condivisi per la connessione
+        private DatiCondivisi datiConnessione;
+        //interi
+        public int indexMio { get; set; }//index dei miei pokemon
+        private int contPokAvv;//contatore dei pokemon avversari
 
         public DatiCondivisiGioco(DatiCondivisi datiConnessione)
         {
             tipiPokemon = new List<string>();
-            loadDataFromJSON();
+            loadDataFromJSON();//carico le liste dei pokemon
             this.datiConnessione = datiConnessione;
             contPokAvv = -1;
             indexMio = 0;
@@ -56,15 +57,6 @@ namespace pokemon_showdown_p2p
                 }
             }
             return moveReturn;
-        }
-        public void setWpfLotta(Lotta wpfLotta)
-        {
-            this.wpfLotta = wpfLotta;
-        }
-
-        public void setDatiConnessione(DatiCondivisi datiConnessione)
-        {
-            this.datiConnessione = datiConnessione;
         }
 
         private BitmapImage bitimg = null;
@@ -103,7 +95,7 @@ namespace pokemon_showdown_p2p
                 }
                 else if (danno == -1)
                 {
-                    aggButton();
+                    aggButton(0);
                     wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP + "/" + listPokemonSelezionatiConMosse[indexMio].pokemonScelto.HP;
                     wpfLotta.pBNostra.Foreground = Brushes.LightGreen;
                     BitmapImage bitimg = new BitmapImage();
@@ -123,7 +115,7 @@ namespace pokemon_showdown_p2p
                     }
                     else
                     {
-                        aggButton();
+                        aggButton(1);
                         wpfLotta.lblHPAlleato.Content = listPokemonSelezionatiConMosse[indexMio + 1].pokemonScelto.HP + "/" + listPokemonSelezionatiConMosse[indexMio + 1].pokemonScelto.HP;
                         wpfLotta.pBNostra.Foreground = Brushes.LightGreen;
                         BitmapImage bitimg = new BitmapImage();
@@ -167,14 +159,14 @@ namespace pokemon_showdown_p2p
         }
         private readonly object buttons = new object();
 
-        private void aggButton()
+        private void aggButton(int add)
         {
             lock (buttons)
             {
-                wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[indexMio].move1.ename + "\nDanno:" + listPokemonSelezionatiConMosse[indexMio].move1.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move1.PP.ToString();
-                wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[indexMio].move2.ename + "\nDanno:" + listPokemonSelezionatiConMosse[indexMio].move2.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move2.PP.ToString();
-                wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[indexMio].move3.ename + "\nDanno:" + listPokemonSelezionatiConMosse[indexMio].move3.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move3.PP.ToString();
-                wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[indexMio].move4.ename + "\nDanno:" + listPokemonSelezionatiConMosse[indexMio].move4.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio].move4.PP.ToString();
+                wpfLotta.btnMossa1.Content = listPokemonSelezionatiConMosse[indexMio + add].move1.ename + "\nDanno:" + listPokemonSelezionatiConMosse[indexMio + add].move1.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio + add].move1.PP.ToString();
+                wpfLotta.btnMossa2.Content = listPokemonSelezionatiConMosse[indexMio + add].move2.ename + "\nDanno:" + listPokemonSelezionatiConMosse[indexMio + add].move2.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio + add].move2.PP.ToString();
+                wpfLotta.btnMossa3.Content = listPokemonSelezionatiConMosse[indexMio + add].move3.ename + "\nDanno:" + listPokemonSelezionatiConMosse[indexMio + add].move3.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio + add].move3.PP.ToString();
+                wpfLotta.btnMossa4.Content = listPokemonSelezionatiConMosse[indexMio + add].move4.ename + "\nDanno:" + listPokemonSelezionatiConMosse[indexMio + add].move4.power.ToString() + "\nPP:" + listPokemonSelezionatiConMosse[indexMio + add].move4.PP.ToString();
             }
         }
 
@@ -297,13 +289,20 @@ namespace pokemon_showdown_p2p
                 if (listMosse[i].power == 0)
                 {
                     listMosse.RemoveAt(i);
+                    i--;
                 }
                 if (!tipiPokemon.Contains(listMosse[i].type))
                 {
                     tipiPokemon.Add(listMosse[i].type);
                 }
             }
-
+            foreach(CMoves move in listMosse)
+            {
+                if(move.power == 0)
+                {
+                    Console.WriteLine(move.id + " " + move.ename);
+                }
+            }
             r = new StreamReader("pokemon.json");
             jsonString = r.ReadToEnd();
             listPokemon = JsonConvert.DeserializeObject<List<CPokemon>>(jsonString);
@@ -314,7 +313,7 @@ namespace pokemon_showdown_p2p
                 pokemon.HP = pokemon.HP * 3;
             }
         }
-
+        /*Prendiamo le mosse in base al tipo del pokemon*/
         public void assegnaMosse()
         {
             listPokemonSelezionatiConMosse = new List<CPokemonConMosse>();
@@ -322,8 +321,6 @@ namespace pokemon_showdown_p2p
             Random r = new Random();
             List<CMoves> t;
             indexMio = 0;
-
-            //ciclo che scorre tutte le mosse in relazione a un pokemon
             for (int i = 0; i < listPokemonSelezionati.Count; i++)
             {
                 t = new List<CMoves>();
@@ -350,19 +347,6 @@ namespace pokemon_showdown_p2p
                 CPokemonConMosse tempPokemon = new CPokemonConMosse(listPokemonSelezionati[i], t[0], t[1], t[2], t[3]);
                 listPokemonSelezionatiConMosse.Add(tempPokemon);
             }
-        }
-
-        private readonly object turnoLock = new object();
-        public void setTurno(bool b)
-        {
-            lock (turnoLock)
-            {
-                mioTurno = b;
-            }
-        }
-        public Boolean getTurno()
-        {
-            return mioTurno;
         }
         public int togliPP(int nMossa)
         {
@@ -415,7 +399,7 @@ namespace pokemon_showdown_p2p
                         }
                         break;
                 }
-                aggButton();
+                aggButton(0);
             }
             return ok;
         }
@@ -430,6 +414,28 @@ namespace pokemon_showdown_p2p
                 }
             }
             return pos;
+        }
+        public void setWpfLotta(Lotta wpfLotta)
+        {
+            this.wpfLotta = wpfLotta;
+        }
+
+        public void setDatiConnessione(DatiCondivisi datiConnessione)
+        {
+            this.datiConnessione = datiConnessione;
+        }
+        //get e set di turno con lock
+        private readonly object turnoLock = new object();
+        public void setTurno(bool b)
+        {
+            lock (turnoLock)
+            {
+                mioTurno = b;
+            }
+        }
+        public Boolean getTurno()
+        {
+            return mioTurno;
         }
     }
     public class CPokemon
@@ -480,23 +486,5 @@ namespace pokemon_showdown_p2p
             this.move4 = move4;
         }
     }
-    //public class CPokemonPerLotta
-    //{
-    //    public string nome { get; set; }
-    //    public int id { get; set; }
-    //    public int HP { get; set; }
-
-    //    public CPokemonPerLotta(string nome, int id, int HP)
-    //    {
-    //        this.nome = nome;
-    //        this.id = id;
-    //        this.HP = HP;
-    //    }
-
-    //    public string toString()
-    //    {
-    //        return nome + "," + id + "," + HP;
-    //    }
-    //}
 
 }

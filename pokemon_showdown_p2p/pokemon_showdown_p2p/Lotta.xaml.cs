@@ -18,6 +18,7 @@ namespace pokemon_showdown_p2p
         private BackgroundWorker bg = new BackgroundWorker();
         private Thread elabora, ascolta, waitEnd, waitTurno;
         private Boolean fineAttesaTurno = false;
+        private bool flag = true;
         public Lotta(DatiCondivisi datiConnessione, DatiCondivisiGioco datiGioco, Gioco WPFGioco)
         {
             InitializeComponent();
@@ -40,8 +41,6 @@ namespace pokemon_showdown_p2p
             waitEnd = new Thread(waitEndd);
             waitEnd.Start();
 
-            //if (datiGioco.mioTurno == false)
-            //    attesaTurno();
             waitTurno = new Thread(attesa);
             waitTurno.Start();
         }
@@ -54,6 +53,7 @@ namespace pokemon_showdown_p2p
             Dispatcher.Invoke(() =>
             {
                 WPFGioco.Show();
+                flag = false;
                 this.Close();
             });
         }
@@ -120,25 +120,18 @@ namespace pokemon_showdown_p2p
                     if (temp[0] == "p")
                     {
                         datiGioco.pokemonAvv = datiGioco.searchListPokemon(Int32.Parse(temp[2]));
-                        //Dispatcher.Invoke(() =>
-                        //{
                         datiGioco.aggPokemonAvv(-1, Int32.Parse(temp[2]));
-                        //});
                         nRandomUltimo = nRandom;
                         sizePrec = datiConnessione.getLista().Count;
                     }
-                    if (temp[0] == "m")
-                    {
-                        //pokemonAlleatoAttuale = listPokemonSelezionatiConMosse[index];
-                        dannoRicevuto = datiGioco.searchListMoves(Int32.Parse(temp[2])).power;
-                        //Dispatcher.Invoke(() =>
-                        //{
-                        datiGioco.aggPokemonMio(dannoRicevuto);
-                        //});
-                        nRandomUltimo = nRandom;
-                        datiGioco.setTurno(true);
-                        sizePrec = datiConnessione.getLista().Count;
-                    }
+                    //if (temp[0] == "m")
+                    //{
+                    //    dannoRicevuto = datiGioco.searchListMoves(Int32.Parse(temp[2])).power;
+                    //    datiGioco.aggPokemonMio(dannoRicevuto);
+                    //    nRandomUltimo = nRandom;
+                    //    datiGioco.setTurno(true);
+                    //    sizePrec = datiConnessione.getLista().Count;
+                    //}
                 }
                 valTempRand = nRandom;
             } while (sizePrec != -1);
@@ -155,15 +148,19 @@ namespace pokemon_showdown_p2p
                     datiConnessione.manda("m;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().move1.id);
                     datiGioco.setTurno(false);
                     datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move1.power, -1);
-                    // attesaTurno();
                 }
-                else if (ris == 1)
+                if (ris == 1)
                 {
-                    if (datiGioco.indexMio < 5)
-                    {
-                        btnMossa1.Background = Brushes.Red;
-                        btnMossa1.Content += "\nPP Finiti.";
-                    }
+                    btnMossa1.Background = Brushes.Red;
+                    btnMossa1.Content += "\nPP Finiti.";
+                }
+            }
+            else if (ris == 2)
+            {
+                if (datiGioco.indexMio < 5)
+                {
+                    btnMossa1.Background = Brushes.Red;
+                    btnMossa1.Content += "\nPP Finiti.";
                 }
             }
         }
@@ -179,18 +176,23 @@ namespace pokemon_showdown_p2p
                     datiConnessione.manda("m;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().move3.id);
                     datiGioco.setTurno(false);
                     datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move3.power, -1);
-                    // attesaTurno();
                 }
-                else if (ris == 1)
+                if (ris == 1)
                 {
-                    if (datiGioco.indexMio < 5)
-                    {
-                        btnMossa3.Background = Brushes.Red;
-                        btnMossa3.Content += "\nPP Finiti.";
-                    }
+                    btnMossa3.Background = Brushes.Red;
+                    btnMossa3.Content += "\nPP Finiti.";
+                }
+            }
+            else if (ris == 2)
+            {
+                if (datiGioco.indexMio < 5)
+                {
+                    btnMossa3.Background = Brushes.Red;
+                    btnMossa3.Content += "\nPP Finiti.";
                 }
             }
         }
+
 
         private void btnMossa2_Click(object sender, RoutedEventArgs e)
         {
@@ -198,14 +200,18 @@ namespace pokemon_showdown_p2p
             if (datiGioco.mioTurno)
             {
                 ris = datiGioco.togliPP(2);
-                if (ris == 0)
+                if (ris == 0 || ris == 1)
                 {
                     datiConnessione.manda("m;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().move2.id);
                     datiGioco.setTurno(false);
                     datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move2.power, -1);
-                    // attesaTurno();
+                    if (ris == 1)
+                    {
+                        btnMossa2.Background = Brushes.Red;
+                        btnMossa2.Content += "\nPP Finiti.";
+                    }
                 }
-                else if (ris == 1)
+                else if (ris == 2)
                 {
                     if (datiGioco.indexMio < 5)
                     {
@@ -213,6 +219,14 @@ namespace pokemon_showdown_p2p
                         btnMossa2.Content += "\nPP Finiti.";
                     }
                 }
+            }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (flag)
+            {
+                datiConnessione.manda("f;" + datiConnessione.peerQuesto.ipport + ";Hai vinto");
             }
         }
 
@@ -227,15 +241,19 @@ namespace pokemon_showdown_p2p
                     datiConnessione.manda("m;" + datiConnessione.peerQuesto.ipport + ";" + datiGioco.getPokemonAttualeNostro().move4.id);
                     datiGioco.setTurno(false);
                     datiGioco.aggPokemonAvv(datiGioco.getPokemonAttualeNostro().move4.power, -1);
-                    // attesaTurno();
                 }
-                else if (ris == 1)
+                if (ris == 1)
                 {
-                    if (datiGioco.indexMio < 5)
-                    {
-                        btnMossa4.Background = Brushes.Red;
-                        btnMossa4.Content += "\nPP Finiti.";
-                    }
+                    btnMossa4.Background = Brushes.Red;
+                    btnMossa4.Content += "\nPP Finiti.";
+                }
+            }
+            else if (ris == 2)
+            {
+                if (datiGioco.indexMio < 5)
+                {
+                    btnMossa4.Background = Brushes.Red;
+                    btnMossa4.Content += "\nPP Finiti.";
                 }
             }
         }
